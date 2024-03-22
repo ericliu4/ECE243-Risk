@@ -325,6 +325,20 @@ bool calculateNumTroopz(currPlayer turnPlayer){
     }
     return troops + count/3;
 }
+/*Move troops from player's territory 1 to territory 2
+    - returns true if move is valid
+    - return false if not (from and to territory does not match up with curr player)
+    Simulate move
+*/
+bool moveTroopsEndofTurn(int location1, int location2){
+    if (currTurn != playerNameOnTerritory[location1] || location1 != location2){
+        return false;
+    }
+    int toMove = numTroopsOnTerritory[location1]-1;
+    numTroopsOnTerritory[location1] = 1;
+    numTroopsOnTerritory[location2] += toMove;
+    return true;
+}
 
 int main(void){
     srand((unsigned int)time(NULL));
