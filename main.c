@@ -300,6 +300,19 @@ int loadConnections(void){
 
 }
 
+/* ATTACK FUNCTION
+    - Returns true is attack went ahead
+    - Returns false if attack own territoy or attacking territory only has 1 troop
+    - Calls diceroll and simulate attack*/
+bool attack(int location1, int location2){
+    if (numTroopsOnTerritory[location1] == 1 || playerNameOnTerritory[location1] == playerNameOnTerritory[location2]){
+        return false;
+    } 
+    //Simulate attack by using dicerolls
+    diceRolls(location1, location2);
+    return true;
+}
+
 int main(void){
     srand((unsigned int)time(NULL));
 
