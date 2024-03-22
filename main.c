@@ -127,7 +127,7 @@ bool diceRolls(int attackTerritory, int defendTerritory){
     - Loads all possible map connections into 2D array (isTerritoriesConnected)
     - 0 between [x][y] means they are not connected
     - 1 between [x][y] menas they have one connections */
-void loadConnections(void){
+void loadConnections(){
     for (int firstCountry = 0; firstCountry < numCountries; firstCountry++){
         for (int secondCountry = 0; secondCountry < numCountries; secondCountry++){
             isTerritoriesConnected[firstCountry][secondCountry] = 0;
@@ -354,11 +354,48 @@ bool placeTroopsStartOfTurn(int location, int numberToPlace){
 
 /* This sets up the map
     - randomly generate starting territoies for players
-    - randomly generate starting troops for each territory
-*/
-void initialBoardSetup(void){
+    - randomly generate starting troops for each territory*/
+void initialBoardSetup(){
     //randomly generate starting territories. 
     //array of numbers 0 to 41 all randomly placed
+    int randomTerritoryNumbers[numCountries];
+    for (int i = 0; i < numCountries; i++){
+        randomTerritoryNumbers[i] = i;
+    }
+    printf("HEREEEE");
+    //randomly swap order of array
+    for (int firstIndex = 41; firstIndex > 0; firstIndex--){
+        int secondIndex = rand()%(firstIndex + 1);
+        int temp = randomTerritoryNumbers[firstIndex];
+        randomTerritoryNumbers[firstIndex] = randomTerritoryNumbers[secondIndex];
+        randomTerritoryNumbers[secondIndex] = temp;
+    }
+    printf("HEREEEE");
+    for (int i = 0; i < numCountries; i++){
+        if (i <= 10){
+            playerNameOnTerritory[randomTerritoryNumbers[i]] = PLAYER1;
+        } else if (i <= 21) {
+            playerNameOnTerritory[randomTerritoryNumbers[i]] = PLAYER2;
+        } else if (i <= 31){
+            playerNameOnTerritory[randomTerritoryNumbers[i]] = PLAYER3;
+        } else {
+            playerNameOnTerritory[randomTerritoryNumbers[i]] = PLAYER4;
+        }
+    }
+    printf("GOT TO HERE");
+    //complete randomly distributing players
+    for (int i = 0; i < numCountries; i++){
+        currPlayer player = playerNameOnTerritory[i];
+        if (player == PLAYER1){
+            printf("Player1\n");
+        } else if (player == PLAYER2){
+            printf("Player2\n");
+        } else if (player == PLAYER3){
+            printf("Player3\n");
+        } else {
+            printf("Player4\n");
+        }
+    }
 }
 
 int main(void){
@@ -369,7 +406,8 @@ int main(void){
     currAction = ATTACKPHASE;
 
     loadConnections();
-
+    printf("step 2");
+    initialBoardSetup();
 
 
     //testing dice roll function
