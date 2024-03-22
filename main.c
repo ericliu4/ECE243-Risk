@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 
 typedef enum{
     STARTSCREEN,
@@ -18,6 +19,7 @@ typedef enum{
 } currPlayer;
 
 typedef enum{
+    PLACETROOPS,
     ATTACKPHASE,
     MOVETROOPPHASE,
 } currPhase;
@@ -28,7 +30,7 @@ currPhase currAction;
 
 //global variables for game state
 #define numCountries 42
-int playerNameOnTerritory[numCountries];
+currPlayer playerNameOnTerritory[numCountries];
 int numTroopsOnTerritory[numCountries];
 
 //if arr[x][y] == 1. that means x is connected to y
@@ -107,11 +109,11 @@ bool diceRolls(int attackTerritory, int defendTerritory){
                 numTroopsOnTerritory[attackTerritory]--;
             }
         }
-        if (numTroopsOnTerritory[defendTerritory] == 0){
+        if (numTroopsOnTerritory[defendTerritory] <= 0){
             int numTroopsLeft = attackNumDice - attackLost;
 
             //populate defendTerritory with remain attackTroops
-            numTroopsOnTerritory[attackTerritory]-=numTroopsLeft;
+            numTroopsOnTerritory[attackTerritory]-= numTroopsLeft;
             numTroopsOnTerritory[defendTerritory] = numTroopsLeft;
             playerNameOnTerritory[defendTerritory] = playerNameOnTerritory[attackTerritory];
             return true;
@@ -125,7 +127,7 @@ bool diceRolls(int attackTerritory, int defendTerritory){
     - Loads all possible map connections into 2D array (isTerritoriesConnected)
     - 0 between [x][y] means they are not connected
     - 1 between [x][y] menas they have one connections */
-int loadConnections(void){
+void loadConnections(void){
     for (int firstCountry = 0; firstCountry < numCountries; firstCountry++){
         for (int secondCountry = 0; secondCountry < numCountries; secondCountry++){
             isTerritoriesConnected[firstCountry][secondCountry] = 0;
@@ -296,8 +298,6 @@ int loadConnections(void){
     isTerritoriesConnected[40][41] = 1;
     isTerritoriesConnected[41][40] = 1;
     printf("Loading connections complete\n\n");
-
-
 }
 
 /* ATTACK FUNCTION
@@ -311,6 +311,19 @@ bool attack(int location1, int location2){
     //Simulate attack by using dicerolls
     diceRolls(location1, location2);
     return true;
+}
+
+/*Calculate the number of troops given to player at start of turn
+    - minimum 3 + 1 for every 3 occupying territories.*/
+bool calculateNumTroopz(currPlayer turnPlayer){
+    int troops = 3;
+    int count = 0;
+    for (int currTerritory = 0; currTerritory < numCountries; currTerritory++){
+        if (turnPlayer == playerNameOnTerritory[currTerritory]){
+            count += 1;
+        }
+    }
+    return troops + count/3;
 }
 
 int main(void){
