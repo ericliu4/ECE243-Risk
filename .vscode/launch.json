@@ -9,7 +9,7 @@
       "stopAtEntry": false,
       "externalConsole": true,
       "cwd": "c:/Users/eric7/OneDrive/Desktop/ece243-Risk/ECE243-Risk",
-      "program": "c:/Users/eric7/OneDrive/Desktop/ece243-Risk/ECE243-Risk/build/Release/outRelease",
+      "program": "c:/Users/eric7/OneDrive/Desktop/ece243-Risk/ECE243-Risk/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
