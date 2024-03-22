@@ -339,6 +339,18 @@ bool moveTroopsEndofTurn(int location1, int location2){
     numTroopsOnTerritory[location2] += toMove;
     return true;
 }
+/* at the start of player turn, player is given troops
+    - returns true is player chose an valid location
+    - returns false if player chose an invalid location
+    -simulate place troops on territory
+*/
+bool placeTroopsStartOfTurn(int location, int numberToPlace){
+    if (playerNameOnTerritory[location] != currTurn){
+        return false;
+    }
+    numTroopsOnTerritory[location] += numberToPlace;
+    return true;
+}
 
 int main(void){
     srand((unsigned int)time(NULL));
