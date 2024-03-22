@@ -45,9 +45,9 @@ int findMin(int a, int b){
     return a < b ? a : b;
 }
 
-
-// returns true if territory is taken over
-// returns false if not
+/* Simulate the dice roll and change the board accordingly
+    returns true if territory is taken over
+    returns false if not */
 bool diceRolls(int attackTerritory, int defendTerritory){
     int attackTroops = numTroopsOnTerritory[attackTerritory];
     int defendTroops = numTroopsOnTerritory[defendTerritory];
@@ -350,6 +350,15 @@ bool placeTroopsStartOfTurn(int location, int numberToPlace){
     }
     numTroopsOnTerritory[location] += numberToPlace;
     return true;
+}
+
+/* This sets up the map
+    - randomly generate starting territoies for players
+    - randomly generate starting troops for each territory
+*/
+void initialBoardSetup(void){
+    //randomly generate starting territories. 
+    //array of numbers 0 to 41 all randomly placed
 }
 
 int main(void){
