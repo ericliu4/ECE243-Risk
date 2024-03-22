@@ -27,12 +27,15 @@ currPlayer currTurn;
 currPhase currAction;
 
 //global variables for game state
-#define numCountries 10
+#define numCountries 42
 int playerNameOnTerritory[numCountries];
 int numTroopsOnTerritory[numCountries];
 
 //if arr[x][y] == 1. that means x is connected to y
 int isTerritoriesConnected[numCountries][numCountries];
+
+//location of each territory
+int locationTerritories[numCountries][numCountries];
 
 
 //Helper functions
@@ -118,6 +121,20 @@ bool diceRolls(int attackTerritory, int defendTerritory){
     } 
     return false;
 }
+/*LOAD CONNECTIONS FUNCTION
+    - Loads all possible map connections into 2D array (isTerritoriesConnected)
+    - 0 between [x][y] means they are not connected
+    - 1 between [x][y] menas they have one connections */
+int loadConnections(void){
+    for (int firstCountry = 0; firstCountry < loadConnections; firstCountry++){
+        for (int secondCountry = 0; secondCountry < loadConnections; secondCountry++){
+            isTerritoriesConnected[firstCountry][secondCountry] = 0;
+        }
+    }
+    // manually load up all connections
+    // map and numbering system found in connections
+    //isTerritoriesConnected[]
+}
 
 int main(void){
     srand((unsigned int)time(NULL));
@@ -125,6 +142,10 @@ int main(void){
     currState = STARTSCREEN;
     currTurn = PLAYER1;
     currAction = ATTACKPHASE;
+
+    loadConnections();
+
+
 
     //testing dice roll function
     numTroopsOnTerritory[0] = 10;
