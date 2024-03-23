@@ -362,7 +362,7 @@ void initialBoardSetup(){
     for (int i = 0; i < numCountries; i++){
         randomTerritoryNumbers[i] = i;
     }
-    printf("HEREEEE");
+    //printf("HEREEEE");
     //randomly swap order of array
     for (int firstIndex = 41; firstIndex > 0; firstIndex--){
         int secondIndex = rand()%(firstIndex + 1);
@@ -370,7 +370,7 @@ void initialBoardSetup(){
         randomTerritoryNumbers[firstIndex] = randomTerritoryNumbers[secondIndex];
         randomTerritoryNumbers[secondIndex] = temp;
     }
-    printf("HEREEEE");
+    //printf("HEREEEE");
     for (int i = 0; i < numCountries; i++){
         if (i <= 10){
             playerNameOnTerritory[randomTerritoryNumbers[i]] = PLAYER1;
@@ -382,7 +382,7 @@ void initialBoardSetup(){
             playerNameOnTerritory[randomTerritoryNumbers[i]] = PLAYER4;
         }
     }
-    printf("GOT TO HERE");
+    //printf("GOT TO HERE");
     //complete randomly distributing players
     for (int i = 0; i < numCountries; i++){
         currPlayer player = playerNameOnTerritory[i];
@@ -395,6 +395,11 @@ void initialBoardSetup(){
         } else {
             printf("Player4\n");
         }
+    }
+
+    //set up random amount of troops starting
+    for (int i = 0; i < numCountries; i++){
+        numTroopsOnTerritory[i] = rand()%5+1;
     }
 }
 
