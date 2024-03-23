@@ -314,7 +314,8 @@ bool attack(int location1, int location2){
 }
 
 /*Calculate the number of troops given to player at start of turn
-    - minimum 3 + 1 for every 3 occupying territories.*/
+    - minimum 3 + 1 for every 3 occupying territories.
+    -if player owns a continent, get continental bonus*/
 bool calculateNumTroopz(currPlayer turnPlayer){
     int troops = 3;
     int count = 0;
@@ -322,6 +323,79 @@ bool calculateNumTroopz(currPlayer turnPlayer){
         if (turnPlayer == playerNameOnTerritory[currTerritory]){
             count += 1;
         }
+    }
+
+    bool bonus = true;
+    // NORTH AMERICA
+    for (int i = 0; i < 9; i++){
+        if (playerNameOnTerritory[i] != turnPlayer){
+            bonus = false;
+            break;
+        }
+    }
+    if (bonus){
+        troops += 5;
+    }
+    //EUROPE
+    bonus = true;
+    for (int i = 9; i < 16; i++){
+        if (playerNameOnTerritory[i] != turnPlayer){
+            bonus = false;
+            break;
+        }
+    }
+    if (bonus){
+        troops += 6;
+    }
+    //AFRICA
+    bonus = true;
+    for (int i = 16; i < 22; i++){
+        if (playerNameOnTerritory[i] != turnPlayer){
+            bonus = false;
+            break;
+        }
+    }
+    if (bonus){
+        troops += 5;
+    }
+    //SOUTH AMERICA
+    bonus = true;
+    for (int i = 22; i < 26; i++){
+        if (playerNameOnTerritory[i] != turnPlayer){
+            bonus = false;
+            break;
+        }
+    }
+    if (bonus){
+        troops += 3;
+    }
+    //AUSTRALIA
+    bonus = true;
+    for (int i = 29; i < 33; i++){
+        if (playerNameOnTerritory[i] != turnPlayer){
+            bonus = false;
+            break;
+        }
+    }
+    if (bonus){
+        troops += 2;
+    }
+    //ASIA
+    bonus = true;
+    for (int i = 26; i < 29; i++){
+        if (playerNameOnTerritory[i] != turnPlayer){
+            bonus = false;
+            break;
+        }
+    }
+    for (int i = 33; i < 42; i++){
+        if (playerNameOnTerritory[i] != turnPlayer){
+            bonus = false;
+            break;
+        }
+    }
+    if (bonus){
+        troops += 7;
     }
     return troops + count/3;
 }
