@@ -288,7 +288,96 @@ void loadConnections(){
 /*dimensions
 */
 void loadLocations(){
-    locationTerritoriesX[0] = 1;
+    locationTerritoriesX[0] = 23;
+    locationTerritoriesY[0] = 34;
+    locationTerritoriesX[1] = 51;
+    locationTerritoriesY[1] = 34;
+    locationTerritoriesX[2] = 49;
+    locationTerritoriesY[2] = 51;
+    locationTerritoriesX[3] = 49;
+    locationTerritoriesY[3] = 75;
+    locationTerritoriesX[4] = 53;
+    locationTerritoriesY[4] = 100;    
+    locationTerritoriesX[5] = 75;
+    locationTerritoriesX[5] = 80;
+    locationTerritoriesY[5] = 75;
+
+    locationTerritoriesX[6] = 70;
+    locationTerritoriesY[6] = 54;
+    locationTerritoriesX[7] = 93;
+    locationTerritoriesY[7] = 54;
+    locationTerritoriesX[8] = 111;
+    locationTerritoriesY[8] = 23;
+    locationTerritoriesX[9] = 135;
+    locationTerritoriesY[9] = 42;
+    locationTerritoriesX[10] = 128;
+    locationTerritoriesY[10] = 68;
+    locationTerritoriesX[11] = 136;
+    locationTerritoriesY[11] = 94;
+    locationTerritoriesX[12] = 158;
+    locationTerritoriesY[12] = 72;
+    locationTerritoriesX[13] = 161;
+    locationTerritoriesY[13] = 40;
+    locationTerritoriesX[14] = 189;
+    locationTerritoriesY[14] = 55;
+    locationTerritoriesX[15] = 162;
+    locationTerritoriesY[15] = 92;
+
+    locationTerritoriesX[16] = 171;
+    locationTerritoriesY[16] = 121;
+    locationTerritoriesX[17] = 146;
+    locationTerritoriesY[17] = 134;
+    locationTerritoriesX[18] = 171;
+    locationTerritoriesY[18] = 159;
+    locationTerritoriesX[19] = 172;
+    locationTerritoriesY[19] = 187;
+    locationTerritoriesX[20] = 203;
+    locationTerritoriesY[20] = 187;
+    locationTerritoriesX[21] = 193;
+    locationTerritoriesY[21] = 152;
+    locationTerritoriesX[22] = 102;
+    locationTerritoriesY[22] = 139;
+    locationTerritoriesX[23] = 77;
+    locationTerritoriesY[23] = 119;
+    locationTerritoriesX[24] = 69;
+    locationTerritoriesY[24] = 142;
+    locationTerritoriesX[25] = 80;
+    locationTerritoriesY[25] = 179;
+
+    locationTerritoriesX[26] = 198;
+    locationTerritoriesY[26] = 111;
+    locationTerritoriesX[27] = 232;
+    locationTerritoriesY[27] = 115;
+    locationTerritoriesX[28] = 260;
+    locationTerritoriesY[28] = 122;
+    locationTerritoriesX[29] = 263;
+    locationTerritoriesY[29] = 157;
+    locationTerritoriesX[30] = 273;
+    locationTerritoriesY[30] = 190;
+    locationTerritoriesX[31] = 300;
+    locationTerritoriesY[31] = 175;
+    locationTerritoriesX[32] = 193;
+    locationTerritoriesY[32] = 144;
+    locationTerritoriesX[33] = 253;
+    locationTerritoriesY[33] = 95;
+    locationTerritoriesX[34] = 259;
+    locationTerritoriesY[34] = 75;
+    locationTerritoriesX[35] = 296;
+    locationTerritoriesY[35] = 80;
+
+    locationTerritoriesX[36] = 281;
+    locationTerritoriesY[36] = 35;
+    locationTerritoriesX[37] = 260;
+    locationTerritoriesY[37] = 27;
+    locationTerritoriesX[38] = 256;
+    locationTerritoriesY[38] = 56;
+    locationTerritoriesX[39] = 236;
+    locationTerritoriesY[39] = 38;
+    locationTerritoriesX[40] = 220;
+    locationTerritoriesY[40] = 52;
+    locationTerritoriesX[41] = 214;
+    locationTerritoriesY[41] = 80;
+
 }
 /* ATTACK FUNCTION
     - Returns true is attack went ahead
