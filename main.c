@@ -297,7 +297,6 @@ void loadConnections(){
     isTerritoriesConnected[40][39] = 1;
     isTerritoriesConnected[40][41] = 1;
     isTerritoriesConnected[41][40] = 1;
-    printf("Loading connections complete\n\n");
 }
 
 /* ATTACK FUNCTION
@@ -458,6 +457,7 @@ void initialBoardSetup(){
     }
     //printf("GOT TO HERE");
     //complete randomly distributing players
+    /*
     for (int i = 0; i < numCountries; i++){
         currPlayer player = playerNameOnTerritory[i];
         if (player == PLAYER1){
@@ -470,6 +470,7 @@ void initialBoardSetup(){
             printf("Player4\n");
         }
     }
+    */
 
     //set up random amount of troops starting
     for (int i = 0; i < numCountries; i++){
@@ -485,10 +486,9 @@ int main(void){
     currAction = ATTACKPHASE;
 
     loadConnections();
-    printf("step 2");
     initialBoardSetup();
 
-
+    /*
     //testing dice roll function
     numTroopsOnTerritory[0] = 10;
     numTroopsOnTerritory[1] = 10;
@@ -507,6 +507,11 @@ int main(void){
 
 
     printf("done!!");
+    */
+   while (true){
+    currState = STARTSCREEN;
+    currTurn = PLAYER1;
+   }
     return 0;
 }
 
