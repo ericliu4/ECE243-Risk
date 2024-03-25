@@ -37,7 +37,8 @@ int numTroopsOnTerritory[numCountries];
 int isTerritoriesConnected[numCountries][numCountries];
 
 //location of each territory
-int locationTerritories[numCountries][numCountries];
+int locationTerritoriesX[numCountries];
+int locationTerritoriesY[numCountries];
 
 
 //Helper functions
@@ -299,6 +300,11 @@ void loadConnections(){
     isTerritoriesConnected[41][40] = 1;
 }
 
+/*dimensions
+*/
+void loadLocations(){
+    locationTerritoriesX[0] = 1;
+}
 /* ATTACK FUNCTION
     - Returns true is attack went ahead
     - Returns false if attack own territoy or attacking territory only has 1 troop
@@ -471,6 +477,7 @@ void initialBoardSetup(){
         }
     }
     */
+    
 
     //set up random amount of troops starting
     for (int i = 0; i < numCountries; i++){
