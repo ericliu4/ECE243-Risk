@@ -85,7 +85,7 @@ static inline void drawPixel(int x, int y, uWord C){
 void drawChar(int x, int y, char c){
     //fixes bc chars are 4 pixels wide
     x = x /4;
-    y = y/4;
+    y = y /4;
     volatile char* cBuffer = (char *)CHAR_BASE;
 	int offset = (y << 7) +x;
 	*(cBuffer + offset) = c;
@@ -105,6 +105,8 @@ void drawString(int x, int y, char* str){
         str++;
     }
 }
+
+
 
 
 void drawSprite(int x_i, int y_i, int* sprite){
