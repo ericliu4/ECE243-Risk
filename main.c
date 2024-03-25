@@ -3,26 +3,11 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include "game.h"
 
-typedef enum{
-    STARTSCREEN,
-    TUTORIAL,
-    INGAME,
-    ENDSCREEN,
-} gameStates;
 
-typedef enum{
-    PLAYER1,
-    PLAYER2,
-    PLAYER3,
-    PLAYER4,
-} currPlayer;
+#include "enums.h"
 
-typedef enum{
-    PLACETROOPS,
-    ATTACKPHASE,
-    MOVETROOPPHASE,
-} currPhase;
 
 gameStates currState;
 currPlayer currTurn;
@@ -495,7 +480,9 @@ int main(void){
     loadConnections();
     initialBoardSetup();
 
-    /*
+    //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY);
+
+    
     //testing dice roll function
     numTroopsOnTerritory[0] = 10;
     numTroopsOnTerritory[1] = 10;
@@ -514,11 +501,7 @@ int main(void){
 
 
     printf("done!!");
-    */
-   while (true){
-    currState = STARTSCREEN;
-    currTurn = PLAYER1;
-   }
+    
     return 0;
 }
 
