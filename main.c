@@ -568,6 +568,7 @@ int main(void){
 
     loadConnections();
     initialBoardSetup();
+    loadLocations();
 
     //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY);
 
