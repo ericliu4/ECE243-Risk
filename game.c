@@ -46,9 +46,8 @@ void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int
         default:
             drawString(80, 235, "ERROR (Invalid turn phase)");
     }
-
+    unsigned short col;
     for(int i = 0; i < 42; ++i){
-        unsigned short col;
         //get color to draw
         switch(playerNameOnLoc[i]) {
             case PLAYER1:
