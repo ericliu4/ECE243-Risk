@@ -7,30 +7,30 @@
 #include <stdlib.h>
 
 void clearScreen(){
-    struct fb_t* fbp = ((struct videoStruct*)VIDEO_BASE)->fbp;
+    struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
     for (int y = 0; y < SCREEN_HEIGHT; y++)
         for (int x = 0; x < SCREEN_WIDTH; x++)
-            fbp->pixels[y][x] = C_BLACK;
+            buffer->pixels[y][x] = C_BLACK;
 }
 
 void fillScreen(uWord c){
-    struct fb_t* fbp = ((struct videoStruct*)VIDEO_BASE)->fbp;
+    struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
     for (int y = 0; y < SCREEN_HEIGHT; y++)
         for (int x = 0; x < SCREEN_WIDTH; x++)
-            fbp->pixels[y][x] = c;
+            buffer->pixels[y][x] = c;
 }
 
 
 void drawHLine(uWord c, int y){
-    struct fb_t* fbp = ((struct videoStruct*)VIDEO_BASE)->fbp;
+    struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
     for (int x = 0; x < SCREEN_WIDTH; x++){
-        fbp->pixels[y][x] = c;
+        buffer->pixels[y][x] = c;
     }
 }
 void drawVLine(uWord c, int x){
-    struct fb_t* fbp = ((struct videoStruct*)VIDEO_BASE)->fbp;
+    struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
     for (int y = 0; y < SCREEN_HEIGHT; y++){
-        fbp->pixels[y][x] = c;
+        buffer->pixels[y][x] = c;
     }
 }
 
@@ -68,18 +68,19 @@ void drawLine(int x0, int y0, int x1, int y1, int color){
 }
 
 void drawRect(int x_i, int y_i, int width, int height, uWord c){
-	struct fb_t* fbp = ((struct videoStruct*)VIDEO_BASE)->fbp;
+	struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
 	for(int y = y_i; y < height; ++y) {
 		for(int x = x_i; x < width; ++x) {
-			fbp->pixels[y][x] = c;	//could modify to use drawPixel but I don't think it makes a difference
+			buffer->pixels[y][x] = c;	//could modify to use drawPixel but I don't think it makes a difference
 		}
 	}
 }
 
 
 static inline void drawPixel(int x, int y, uWord C){
-    struct fb_t* fbp = ((struct videoStruct*)VIDEO_BASE)->fbp;
-    fbp->pixels[y][x] = C;
+    //struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->fbp;
+    //fbp->pixels[y][x] = C;
+    ((struct videoStruct*)VIDEO_BASE)->bfbp->pixels[y][x] = C;
 }
 
 void drawChar(int x, int y, char c){
@@ -93,13 +94,14 @@ void drawChar(int x, int y, char c){
 
 void drawString(int x, int y, char* str){
     while(*str){
-        drawChar(x++, y, *str);
+        drawChar(x, y, *str);
+        x += 4;
         //wraparound checking just in case
-        if(x > 79){
+        if(x > 319){
             x = 0;
-            y++;
+            y+= 4;
         } 
-        if(y > 59){
+        if(y > 239){
             y = 0;
         }
         str++;

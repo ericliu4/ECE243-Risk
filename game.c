@@ -3,6 +3,7 @@
 #include "draw.h"
 #include "enums.h"
 #include "globals.h"
+#include "helper.h"
 
 void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int locY[], currPlayer currTurn, currPhase currAction){
 
@@ -81,4 +82,7 @@ void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int
         else
             drawChar(locX[i], locY[i], numTroopsOnLoc[i]+48);
     }
+
+    swapBuffers();
+    wait_for_vsync();
 }
