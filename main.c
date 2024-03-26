@@ -570,7 +570,7 @@ int main(void){
     initialBoardSetup();
     loadLocations();
 
-    //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY);
+    drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
 
     
     //testing dice roll function
@@ -581,6 +581,10 @@ int main(void){
 
     // Call the diceRolls function for territories 0 and 1
     bool result = diceRolls(0, 1);
+
+    currTurn = PLAYER2;
+    currAction = PLACETROOPS;
+    drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
 
     // Print the result
     printf("Result of the battle: %s\n", result ? "Victory" : "Defeat");

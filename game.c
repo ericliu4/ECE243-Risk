@@ -9,8 +9,6 @@ void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int
 
     //TODO - This should put all of this on the back buffer, then flip the buffers and "wait for vsync"
 
-
-
     //draw main map
     drawScreen(*image_data);
 
@@ -28,7 +26,7 @@ void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int
             drawString(80, 228, "Player 3 (Green)");
             break;
         case PLAYER4:
-            drawString(80, 228, "Player 4 (Yellow)");
+            drawString(80, 228, "Player 4 (Magenta)");
             break;
         default:
             drawString(80, 228, "ERROR (improper player)");
@@ -60,14 +58,16 @@ void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int
                 col = C_GREEN;
                 break;
             case PLAYER4:
-                col = C_YELLOW;
+                col = C_MAGENTA;
                 break;
             default:
                 col = C_BLACK; //for debugging
         }
 
         //draw rectangle at location
-        drawRect(locX[i] -4, locY[i]-2, locX[i] +4, locY[i]+2, col - 0x841);
+        int x_i = locX[i] /4 *4;
+        int y_i = locY[i] /4 *4;
+        drawRect(x_i -2, y_i -2, x_i +6, y_i +6, col);
 
         //draw number of troops at location
         if(numTroopsOnLoc[i] < 0)
