@@ -555,7 +555,8 @@ void initialBoardSetup(){
 
     //set up random amount of troops starting
     for (int i = 0; i < numCountries; i++){
-        numTroopsOnTerritory[i] = rand()%5+1;
+        //numTroopsOnTerritory[i] = rand()%5+1;
+        numTroopsOnTerritory[i] = rand()%5 + 1;
     }
 }
 
@@ -570,9 +571,22 @@ int main(void){
     initialBoardSetup();
     loadLocations();
 
-    drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+    //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY);
 
-    
+
+    //FSM for gane state
+    while(true){
+        if (currState == STARTSCREEN){
+            //start screen polling
+        }
+        if (currState == INGAME){
+            //in game function
+        } 
+        else {
+            //end screen function
+        }
+    }
+
     //testing dice roll function
     numTroopsOnTerritory[0] = 10;
     numTroopsOnTerritory[1] = 10;
@@ -581,10 +595,6 @@ int main(void){
 
     // Call the diceRolls function for territories 0 and 1
     bool result = diceRolls(0, 1);
-
-    currTurn = PLAYER2;
-    currAction = PLACETROOPS;
-    drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
 
     // Print the result
     printf("Result of the battle: %s\n", result ? "Victory" : "Defeat");
