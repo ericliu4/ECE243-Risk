@@ -604,7 +604,12 @@ void endGamePolling(){
 void tutorialScreenPolling(){
     int val;
     printf("currently polling for input\n");
-    scanf("%d", &val);
+    while (1) {
+        if (inputPolling()) {
+            return; 
+        }
+        // usleep(10000); to wait for 10ms??
+    }
 }
 
 void inGameScreenPolling(){
@@ -643,7 +648,6 @@ int main(void){
             //drawTutorialScreen();
             tutorialScreenPolling();
             currState = INGAME;
-
         }
 
          else if (currState == INGAME){
@@ -652,8 +656,6 @@ int main(void){
             //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY);
             inGameScreenPolling();
             currState = ENDSCREEN;
-
-
         } 
         else {
             //end screen function
