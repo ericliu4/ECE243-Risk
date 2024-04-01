@@ -570,6 +570,19 @@ void titleScreenPolling(){
     scanf("%d", &val);
 }
 
+void endGamePolling(){
+    int val;
+    printf("currently polling for input\n");
+    scanf("%d", &val);
+}
+
+void tutorialScreenPolling(){
+    int val;
+    printf("currently polling for input\n");
+    scanf("%d", &val);
+}
+
+
 int main(void){
     srand((unsigned int)time(NULL));
 
@@ -601,7 +614,7 @@ int main(void){
 
         }
 
-        }if (currState == INGAME){
+         else if (currState == INGAME){
             //in game function
             printf("State: InGame\n");
             //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY);
@@ -614,6 +627,10 @@ int main(void){
         } 
         else {
             //end screen function
+            printf("State: EndGame\n");
+            //drawEndGame();
+            endGamePolling();
+            currState = STARTSCREEN;
         }
     }
 
