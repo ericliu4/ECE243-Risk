@@ -582,6 +582,12 @@ void tutorialScreenPolling(){
     scanf("%d", &val);
 }
 
+void inGameScreenPolling(){
+    int val;
+    printf("currently polling for input\n");
+    scanf("%d", &val);
+}
+
 
 int main(void){
     srand((unsigned int)time(NULL));
@@ -597,7 +603,7 @@ int main(void){
 
 
     //FSM for gane state
-    while(true){
+    while(1){
         if (currState == STARTSCREEN){
             printf("State: StartScreen\n");
             //drawTitleScreen();   //to be implemented later
@@ -605,12 +611,13 @@ int main(void){
             //start screen polling
             titleScreenPolling();
             printf("Exit StartScreen");
-            currState = INGAME;
+            currState = TUTORIAL;
         }
         else if (currState == TUTORIAL){
             printf("State: Tutorial\n");
             //drawTutorialScreen();
             tutorialScreenPolling();
+            currState = INGAME;
 
         }
 
@@ -618,11 +625,9 @@ int main(void){
             //in game function
             printf("State: InGame\n");
             //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY);
+            inGameScreenPolling();
+            currState = ENDSCREEN;
 
-            bool endGame = false;
-            while (!endGame){
-                printf("Hello World");
-            }   
 
         } 
         else {
