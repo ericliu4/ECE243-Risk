@@ -7,7 +7,8 @@
 
 
 #include "enums.h"
-
+// PS/2 port address
+#define PS2_ptr ((volatile int *) 0xFF200100) 
 
 gameStates currState;
 currPlayer currTurn;
@@ -563,11 +564,35 @@ void initialBoardSetup(){
     }
 }
 
+int inputPolling() {
+    int PS2_data, RVALID;
+    unsigned char byte1, byte2, byte3;
+
+    PS2_data = *PS2_ptr; 
+    RVALID = (PS2_data & 0x8000);  
+    if (RVALID) {
+        byte1 = byte2;
+        byte2 = byte3;
+        byte3 = PS2_data & 0xFF;
+
+        //check for left button here
+        if (byte1 & 0x01) { 
+            return 1; 
+        }
+    }
+    return 0; // No click detected
+}
+
+
 void titleScreenPolling(){
     //currently changed to terminal input for testing
-    int val;
     printf("currently polling for input\n");
-    scanf("%d", &val);
+    while (1) {
+        if (inputPolling()) {
+            return; 
+        }
+        // usleep(10000); to wait for 10ms??
+    }
 }
 
 void endGamePolling(){
