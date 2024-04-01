@@ -396,7 +396,7 @@ bool attack(int location1, int location2){
     - minimum 3 + 1 for every 3 occupying territories.
     -if player owns a continent, get continental bonus*/
 bool calculateNumTroopz(currPlayer turnPlayer){
-    int troops = 3;
+    int troops = 0;
     int count = 0;
     for (int currTerritory = 0; currTerritory < numCountries; currTerritory++){
         if (turnPlayer == playerNameOnTerritory[currTerritory]){
@@ -435,7 +435,7 @@ bool calculateNumTroopz(currPlayer turnPlayer){
         }
     }
     if (bonus){
-        troops += 5;
+        troops += 4;
     }
     //SOUTH AMERICA
     bonus = true;
@@ -475,6 +475,9 @@ bool calculateNumTroopz(currPlayer turnPlayer){
     }
     if (bonus){
         troops += 7;
+    }
+    if (count / 3 < 3){
+        count = 9;
     }
     return troops + count/3;
 }
@@ -560,6 +563,13 @@ void initialBoardSetup(){
     }
 }
 
+void titleScreenPolling(){
+    //currently changed to terminal input for testing
+    int val;
+    printf("currently polling for input\n");
+    scanf("%d", &val);
+}
+
 int main(void){
     srand((unsigned int)time(NULL));
 
@@ -571,16 +581,36 @@ int main(void){
     initialBoardSetup();
     loadLocations();
 
-    //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY);
 
 
     //FSM for gane state
     while(true){
         if (currState == STARTSCREEN){
+            printf("State: StartScreen\n");
+            //drawTitleScreen();   //to be implemented later
+
             //start screen polling
+            titleScreenPolling();
+            printf("Exit StartScreen");
+            currState = INGAME;
         }
-        if (currState == INGAME){
+        else if (currState == TUTORIAL){
+            printf("State: Tutorial\n");
+            //drawTutorialScreen();
+            tutorialScreenPolling();
+
+        }
+
+        }if (currState == INGAME){
             //in game function
+            printf("State: InGame\n");
+            //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY);
+
+            bool endGame = false;
+            while (!endGame){
+                printf("Hello World");
+            }   
+
         } 
         else {
             //end screen function
