@@ -17,5 +17,12 @@ struct videoStruct {
     unsigned int volatile StatusControl;
 };
 
+typedef struct {
+    int dx;
+    int dy;
+    int left_pressed_bit;
+    int right_pressed_bit;
+}mouse_movement;
+
 
 #endif /*STRUCTS_H*/

@@ -22,6 +22,7 @@ typedef unsigned short uWord;
 
 #define CHAR_BASE 0x09000000
 #define VIDEO_BASE 0xFF203020
+#define PS2_ptr ((volatile int *) 0xFF200100) 
 
 
 
