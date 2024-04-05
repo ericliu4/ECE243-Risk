@@ -4,12 +4,15 @@
 #include <time.h>
 #include <math.h>
 #include "game.h"
+#include "mouse.h"
 
 
 #include "enums.h"
 // PS/2 port address
 #define PS2_ptr ((volatile int *) 0xFF200100) 
 
+gameStates prevState;
+gameStates nextState;
 gameStates currState;
 currPlayer currTurn;
 currPhase currAction;
@@ -622,6 +625,7 @@ void inGameScreenPolling(){
 int main(void){
     srand((unsigned int)time(NULL));
 
+    prevState = ENDSCREEN;
     currState = STARTSCREEN;
     currTurn = PLAYER1;
     currAction = ATTACKPHASE;
@@ -631,39 +635,58 @@ int main(void){
     loadLocations();
 
 
-
     //FSM for gane state
     while(1){
         if (currState == STARTSCREEN){
             printf("State: StartScreen\n");
-            //drawTitleScreen();   //to be implemented later
+            if(prevState != STARTSCREEN)
+                drawTitleScreen();   
 
             //start screen polling
-            titleScreenPolling();
-            printf("Exit StartScreen");
-            currState = TUTORIAL;
+            //titleScreenPolling();
+            if(0){ //use this for title screen polling checj
+                printf("Exit StartScreen");
+                nextState = TUTORIAL;
+            }
+
+            
         }
         else if (currState == TUTORIAL){
             printf("State: Tutorial\n");
-            //drawTutorialScreen();
-            tutorialScreenPolling();
-            currState = INGAME;
+            drawTutorialScreen();
+            //tutorialScreenPolling();
+            if(0){ //use this for polling from space bar
+                printf("Exiting Tutorial\n");
+                nextState = INGAME;
+            }
+
         }
 
          else if (currState == INGAME){
             //in game function
             printf("State: InGame\n");
-            //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY);
-            inGameScreenPolling();
-            currState = ENDSCREEN;
+            drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+            //inGameScreenPolling();
+            //gameLogic
+            if(0){ //eventually sub this out for
+                nextState = ENDSCREEN;
+            }
+
         } 
         else {
             //end screen function
             printf("State: EndGame\n");
-            //drawEndGame();
+            //drawEndGame(); <- make sure to pass through if the player won or lost
             endGamePolling();
-            currState = STARTSCREEN;
+            nextState = STARTSCREEN;
         }
+
+        //update FSM
+        prevState = currState;
+        currState = nextState;
+
+
+
     }
 
     //testing dice roll function

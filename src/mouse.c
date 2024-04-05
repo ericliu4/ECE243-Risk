@@ -1,14 +1,29 @@
-#include "globals.h"
-#include "structs.h"
+#include "mouse.h"
 
 //https://github.com/yixin0829/ece243-final-project/blob/master/src/2_clear_screen_and_show_cursor_helper_functions.c 
 //code generously
+int checkIfMousePluggedIn(){
+  volatile int * PS2_ptr = (int *) 0xFF200100;  // PS/2 port address
+  int PS2_data = *(PS2_ptr);
+
+  int RVALID = (PS2_data & 0x8000);
+  if(RVALID != 0){
+    return 1;
+  }
+  return 0;
+}
+
+
+
 mouse_movement get_mouse_movement() {
 
-  counting_down();
-  counting_down();
+  //counting_down();
+  //counting_down();
   //Declare return struct variable
   mouse_movement movement;
+
+  volatile int * PS2_ptr = (int *) 0xFF200100;  // PS/2 port address
+
 
   // Up counter resets upon counts to 3 to retrieve one 3-byte movement packet
   int counter = 1;
@@ -21,12 +36,13 @@ mouse_movement get_mouse_movement() {
 
     int PS2_data, RVALID;
 
-    while(1) {
+  while(1) {
 
     PS2_data = *(PS2_ptr);  // read the Data register in the PS/2 port
 
   
     RVALID = (PS2_data & 0x8000); // extract the RVALID field (15th bit)
+
 
     if (RVALID && counter == 1) {
       // &0xFF: Only take the first 8 bits - data
@@ -97,11 +113,3 @@ mouse_movement get_mouse_movement() {
 }
 
 
-void draw_cursor(int x_cursor, int y_cursor, int colour, int size, bool draw_mode){
-
-      draw_block(x_cursor, y_cursor, colour, size);
-      if(draw_mode) {
-        canvas[x_cursor][y_cursor] = 1;
-        printf("Writing into canvas\n");
-      }
-}
