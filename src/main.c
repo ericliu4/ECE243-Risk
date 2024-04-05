@@ -648,12 +648,34 @@ int getSelectedTerritory(){
 
 void playerTurn(void){
     //phase 1. place troops
-    printf("Player 1: place troops\n");
+    printf("Phase 1: place troops\n");
     int placeTroopsIndex = getSelectedTerritory();
     int numPlacedTroops = getNumPlaceTroops(PLAYER1);
     placeTroopsStartOfTurn(placeTroopsIndex, numPlacedTroops);
 
+    //phase 2. attack
+    printf("Phase 2: attack\n");
+    bool attackPhase = true;
+    while(attackPhase){
+        int getFirstLocation = getSelectedTerritory();
+        if (getFirstLocation == 99){
+            attackPhase = false;
+            break;
+        } else if (playerNameOnTerritory[getFirstLocation] != PLAYER1){
+            printf("Illegal Move!!\n");
+            continue;
+        }
+        int getSecondLocation = getSelectedTerritory();
+        int success = attack(getFirstLocation, getSecondLocation);
+        if (success == false){
+            printf("Illegal Move!!\n");
+            continue;
+        }
+    }
+
+    printf("Phase 3: Move Troops");
     
+
 
 }
 /*
