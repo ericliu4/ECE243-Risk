@@ -627,6 +627,18 @@ void inGameScreenPolling(){
     scanf("%d", &val);
 }*/
 
+bool checkEndGame(void){
+    currPlayer curr = playerNameOnTerritory[0];
+    for (int i = 0; i < numCountries; i++){
+        if (curr != playerNameOnTerritory[i]);
+        return false;
+    }
+    return true;
+}
+
+bool checkIfPlayerWIn(){
+    return false;
+}
 
 int main(void){
     srand((unsigned int)time(NULL));
