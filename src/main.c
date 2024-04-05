@@ -627,6 +627,9 @@ void inGameScreenPolling(){
     scanf("%d", &val);
 }*/
 
+/*
+Check if all the territories is occupied by the same player
+*/
 bool checkEndGame(void){
     currPlayer curr = playerNameOnTerritory[0];
     for (int i = 0; i < numCountries; i++){
@@ -636,8 +639,12 @@ bool checkEndGame(void){
     return true;
 }
 
-bool checkIfPlayerWIn(){
-    return false;
+/*
+Only called at endgame stage. Check if the player won the game
+*/
+bool checkIfPlayerWIn(void){
+    //This function only called if there is only 1 player left
+    return PLAYER1 == playerNameOnTerritory[0];
 }
 
 int main(void){
