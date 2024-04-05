@@ -627,8 +627,7 @@ void inGameScreenPolling(){
     scanf("%d", &val);
 }*/
 
-/*
-Check if all the territories is occupied by the same player
+/*Check if all the territories is occupied by the same player
 */
 bool checkEndGame(void){
     currPlayer curr = playerNameOnTerritory[0];
@@ -639,6 +638,24 @@ bool checkEndGame(void){
     return true;
 }
 
+/*Temporary Function. Will be replaced by Nick's code
+*/
+int getSelectedTerritory(){
+    int a;
+    scanf("%d", &a);
+    return a;
+}
+
+void playerTurn(void){
+    //phase 1. place troops
+    printf("Player 1: place troops\n");
+    int placeTroopsIndex = getSelectedTerritory();
+    int numPlacedTroops = getNumPlaceTroops(PLAYER1);
+    placeTroopsStartOfTurn(placeTroopsIndex, numPlacedTroops);
+
+    
+
+}
 /*
 Only called at endgame stage. Check if the player won the game
 */
@@ -700,11 +717,7 @@ int main(void){
                     nextState = INGAME;
                     mapChanged = true;
                 }
-
             }
-            //tutorialScreenPolling();
-
-
 
         }
 
@@ -721,6 +734,10 @@ int main(void){
             if(endGame){ 
                 nextState = ENDSCREEN;
             }
+
+            //either player or ai turn
+            //right now for testing purposes. always player turn
+
         } 
         else {
             //end screen function
