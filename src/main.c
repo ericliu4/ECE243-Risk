@@ -655,18 +655,18 @@ void playerTurn(void){
 
     //phase 2. attack
     printf("Phase 2: attack\n");
-    bool attackPhase = true;
-    while(attackPhase){
+    bool valid = true;
+    while(valid){
         int getFirstLocation = getSelectedTerritory();
         if (getFirstLocation == 99){
-            attackPhase = false;
+            valid = false;
             break;
         } else if (playerNameOnTerritory[getFirstLocation] != PLAYER1){
             printf("Illegal Move!!\n");
             continue;
         }
         int getSecondLocation = getSelectedTerritory();
-        int success = attack(getFirstLocation, getSecondLocation);
+        bool success = attack(getFirstLocation, getSecondLocation);
         if (success == false){
             printf("Illegal Move!!\n");
             continue;
@@ -674,10 +674,24 @@ void playerTurn(void){
     }
 
     printf("Phase 3: Move Troops");
-    
-
-
+    valid = true;
+    while(valid){
+        int getFirstLocation = getSelectedTerritory();
+        if (getFirstLocation == 99){
+            break;
+        } else if (playerNameOnTerritory[getFirstLocation] != PLAYER1) {
+            printf("Illegal Move!!\n");
+            continue;
+        }
+        int getSecondLocation = getSelectedTerritory();
+        bool success = moveTroopsEndofTurn(getFirstLocation, getSecondLocation);
+        if (success == false){
+            printf("Illegal Move!!\n");
+            continue;
+        }
+    }
 }
+
 /*
 Only called at endgame stage. Check if the player won the game
 */
