@@ -2,6 +2,10 @@
 #include "structs.h"
 #include "draw.h"
 #include "helper.h"
+#include "enums.h"
+#include "../resources/riskMap.h"
+#include "../resources/titleScreen.h"
+#include "../resources/tutorialScreen.h"
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -143,4 +147,20 @@ void drawCursor(int x_cursor, int y_cursor, int colour, int size){
   for(int y = y_cursor - size; y < y_cursor + size; ++y){
     drawPixel(x_cursor, y, C_WHITE);
   }
+}
+
+void eraseCursor(int x_cursor, int y_cursor, int size, gameStates gameState){
+
+    switch(gameState){
+        case STARTSCREEN:
+            for(int x = x_cursor - size; x = x_cursor + size; ++x){
+                drawPixel(x, y_cursor, titleScreen[y_cursor][x]);
+            }
+            return;
+        case 
+    }
+
+    for(int x = x_cursor - size; x = x_cursor + size; ++x){
+        drawPixel()
+    }
 }

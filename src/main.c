@@ -5,17 +5,22 @@
 #include <math.h>
 #include "game.h"
 #include "mouse.h"
-
+#include "../ps2/address_map_nios2.h"
+#include "../ps2/PS2.h"
 
 #include "enums.h"
 // PS/2 port address
-#define PS2_ptr ((volatile int *) 0xFF200100) 
+//#define PS2_ptr ((volatile int *) 0xFF200100) 
 
 gameStates prevState;
 gameStates nextState;
 gameStates currState;
 currPlayer currTurn;
 currPhase currAction;
+extern mouse_movement movement;
+
+int cursorLoc[2];
+int prevCursorLoc[2];
 
 //global variables for game state
 #define numCountries 42
@@ -567,6 +572,7 @@ void initialBoardSetup(){
     }
 }
 
+/*
 int inputPolling() {
     int PS2_data, RVALID;
     unsigned char byte1, byte2, byte3;
@@ -619,11 +625,19 @@ void inGameScreenPolling(){
     int val;
     printf("currently polling for input\n");
     scanf("%d", &val);
-}
+}*/
 
 
 int main(void){
     srand((unsigned int)time(NULL));
+
+    volatile int * PS2_ptr = (int *)PS2_BASE;
+
+    int  PS2_data, RVALID;
+    char byte1 = 0, byte2 = 0, byte3 = 0;
+
+    int nicks_counter;
+    bool mapChanged;
 
     prevState = ENDSCREEN;
     currState = STARTSCREEN;
@@ -638,15 +652,17 @@ int main(void){
     //FSM for gane state
     while(1){
         if (currState == STARTSCREEN){
-            printf("State: StartScreen\n");
+            //printf("State: StartScreen\n");
             if(prevState != STARTSCREEN)
                 drawTitleScreen();   
 
+
             //start screen polling
             //titleScreenPolling();
-            if(0){ //use this for title screen polling checj
+            if(movement.left_pressed_bit){ //use this for title screen polling checj
                 printf("Exit StartScreen");
                 nextState = TUTORIAL;
+                nicks_counter = 1000000;
             }
 
             
@@ -654,18 +670,29 @@ int main(void){
         else if (currState == TUTORIAL){
             printf("State: Tutorial\n");
             drawTutorialScreen();
-            //tutorialScreenPolling();
-            if(0){ //use this for polling from space bar
-                printf("Exiting Tutorial\n");
-                nextState = INGAME;
+            if(nicks_counter!= 0){ //waiting so that one click doesn't skip you ahead
+                nicks_counter--;
+            }else {
+                if(movement.left_pressed_bit){ //use this for polling from space bar
+                    printf("Exiting Tutorial\n");
+                    nextState = INGAME;
+                    mapChanged = true;
+                }
+
             }
+            //tutorialScreenPolling();
+
+
 
         }
 
          else if (currState == INGAME){
             //in game function
             printf("State: InGame\n");
-            drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+            if(mapChanged){
+                drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+                mapChanged = false;
+            }
             //inGameScreenPolling();
             //gameLogic
             if(0){ //eventually sub this out for
@@ -677,7 +704,7 @@ int main(void){
             //end screen function
             printf("State: EndGame\n");
             //drawEndGame(); <- make sure to pass through if the player won or lost
-            endGamePolling();
+            //endGamePolling();
             nextState = STARTSCREEN;
         }
 
@@ -685,7 +712,30 @@ int main(void){
         prevState = currState;
         currState = nextState;
 
+        //handle mouse stuff
 
+        PS2_data = *(PS2_ptr);        // read the Data register in the PS/2 port
+        RVALID   = PS2_data & 0x8000; // extract the RVALID field
+        if (RVALID) {
+            /* shift the next data byte into the display */
+            byte1 = byte2;
+            byte2 = byte3;
+            byte3 = PS2_data & 0xFF;
+            if(byte1 & 0x08){ //checking for "always 1" bit
+                HEX_PS2(byte1, byte2, byte3);
+
+                //draw mouse cursor:
+                
+
+
+            } /* else{
+                printf("Bytes not lined up!\n");
+            }*/
+
+            if ((byte2 == (char)0xAA) && (byte3 == (char)0x00))
+                // mouse inserted; initialize sending of data
+                *(PS2_ptr) = 0xF4;
+        }
 
     }
 

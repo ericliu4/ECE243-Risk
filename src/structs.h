@@ -18,14 +18,14 @@ struct videoStruct {
 };
 
 typedef struct {
-    int dx;
-    int dy;
+    short dx;
+    short dy;
 
-    int xPos;
-    int yPos;
+    short xPos;
+    short yPos;
 
-    int left_pressed_bit;
-    int right_pressed_bit;
+    char left_pressed_bit;
+    char right_pressed_bit;
 }mouse_movement;
 
 
