@@ -655,7 +655,7 @@ int main(void){
     int  PS2_data, RVALID;
     char byte1 = 0, byte2 = 0, byte3 = 0;
 
-    int nicks_counter;
+    int nicks_counter = 0;
     bool mapChanged;
 
     prevState = ENDSCREEN;
@@ -671,6 +671,9 @@ int main(void){
     //FSM for gane state
     while(1){
         if (currState == STARTSCREEN){
+            if(nicks_counter!= 0){ //waiting so that one click doesn't skip you ahead
+                nicks_counter--;
+            }
             //printf("State: StartScreen\n");
             if(prevState != STARTSCREEN)
                 drawTitleScreen();   
@@ -714,17 +717,22 @@ int main(void){
             }
             //inGameScreenPolling();
             //gameLogic
-            if(0){ //eventually sub this out for
+            bool endGame = checkEndGame();
+            if(endGame){ 
                 nextState = ENDSCREEN;
             }
-
         } 
         else {
             //end screen function
             printf("State: EndGame\n");
             //drawEndGame(); <- make sure to pass through if the player won or lost
-            //endGamePolling();
-            nextState = STARTSCREEN;
+            bool playerWon = checkIfPlayerWIn();
+            //drawEndGame(playerWon); <- make sure to pass through if the player won or lost
+            if(movement.left_pressed_bit){ 
+                printf("Exit EndGame Stage");
+                nextState = STARTSCREEN;
+                nicks_counter = 1000000;
+            }     
         }
 
         //update FSM
