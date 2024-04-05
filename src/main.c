@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+
 #include "game.h"
 #include "mouse.h"
 #include "../ps2/address_map_nios2.h"
@@ -17,7 +18,7 @@ gameStates nextState;
 gameStates currState;
 currPlayer currTurn;
 currPhase currAction;
-extern mouse_movement movement;
+//extern mouse_movement movement;
 
 int cursorLoc[2];
 int prevCursorLoc[2];
@@ -496,7 +497,7 @@ bool calculateNumTroopz(currPlayer turnPlayer){
     Simulate move
 */
 bool moveTroopsEndofTurn(int location1, int location2){
-    if (currTurn != playerNameOnTerritory[location1] || location1 != location2){
+    if (currTurn != playerNameOnTerritory[location1] || currTurn != playerNameOnTerritory[location1]){
         return false;
     }
     int toMove = numTroopsOnTerritory[location1]-1;
@@ -652,7 +653,7 @@ void playerTurn(void){
     int placeTroopsIndex = getSelectedTerritory();
     int numPlacedTroops = getNumPlaceTroops(PLAYER1);
     placeTroopsStartOfTurn(placeTroopsIndex, numPlacedTroops);
-
+    //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
     //phase 2. attack
     printf("Phase 2: attack\n");
     bool valid = true;
@@ -672,6 +673,7 @@ void playerTurn(void){
             continue;
         }
     }
+    //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
 
     printf("Phase 3: Move Troops");
     valid = true;
@@ -690,6 +692,8 @@ void playerTurn(void){
             continue;
         }
     }
+
+    //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
 }
 
 /*
@@ -701,9 +705,10 @@ bool checkIfPlayerWIn(void){
 }
 
 int main(void){
+    printf("Start MAIN\n");
     srand((unsigned int)time(NULL));
 
-    volatile int * PS2_ptr = (int *)PS2_BASE;
+    //volatile int * PS2_ptr = (int *)PS2_BASE;
 
     int  PS2_data, RVALID;
     char byte1 = 0, byte2 = 0, byte3 = 0;
@@ -761,7 +766,7 @@ int main(void){
             //in game function
             printf("State: InGame\n");
             if(mapChanged){
-                drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+                //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
                 mapChanged = false;
             }
             //inGameScreenPolling();
