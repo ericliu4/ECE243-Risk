@@ -647,6 +647,21 @@ int getSelectedTerritory(){
     return a;
 }
 
+void printMap(void){
+    for (int i = 0; i < numCountries; i++){
+        currPlayer PLAYER = playerNameOnTerritory[i];
+        int playerNum = 0;
+        if (PLAYER == PLAYER2){
+            playerNum = 1;
+        } else if (PLAYER == PLAYER3){
+            playerNum = 2;
+        } else if (PLAYER == PLAYER4){
+            playerNum = 3;
+        }
+        printf("%d, PLAYER: %d, NUM TROOPS: %d\n", i, playerNum, numTroopsOnTerritory[i]);
+    }
+}
+
 void playerTurn(void){
     //phase 1. place troops
     printf("Phase 1: place troops\n");
