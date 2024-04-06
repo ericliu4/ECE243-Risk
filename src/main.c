@@ -743,6 +743,14 @@ int main(void){
             //inGameScreenPolling();
             //gameLogic
             bool endGame = checkEndGame();
+
+            if (currTurn == PLAYER1){
+                playerTurn();
+                currTurn = PLAYER2;
+            } else {
+                endGame = true;
+            }
+
             if(endGame){ 
                 nextState = ENDSCREEN;
             }
@@ -757,7 +765,7 @@ int main(void){
             //drawEndGame(); <- make sure to pass through if the player won or lost
             bool playerWon = checkIfPlayerWIn();
             //drawEndGame(playerWon); <- make sure to pass through if the player won or lost
-            if(0){ 
+            if(cursor.clicked){ 
                 printf("Exit EndGame Stage");
                 nextState = STARTSCREEN;
             }     
