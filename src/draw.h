@@ -3,6 +3,8 @@
 
 #include "globals.h"
 #include "structs.h"
+#include "enums.h"
+
 
 //struct videoStruct volatile *const VIDEO_BASE = ((struct videoStruct *) 0xFF203020);
 
@@ -36,7 +38,5 @@ void drawScreen(unsigned short img[], int height);
 void drawChar(int x, int y, char c);
 
 void drawString(int x, int y, char* str);
-
-void drawCursor(int x_cursor, int y_cursor, int colour, int size);
 
 #endif /*DRAW_H*/

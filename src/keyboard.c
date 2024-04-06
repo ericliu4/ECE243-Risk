@@ -40,6 +40,8 @@ void pollKeyboard(){
 
 	//need to read posedge
 	if(byte2 == (char)0xF0 || byte2 == (char)0xE0){
+		if(keyPressed)
+			return;
 		//read is probably good:
 			switch(byte3){
 				case (char)0x1D: //W key
@@ -66,10 +68,12 @@ void pollKeyboard(){
 				case (char)0x29:
 				case (char)0x5A:
 					cursor.clicked = true;
+					keyPressed = true;
 					break;
 			}
 
-	} 	   	   	   
+	} 
+	keyPressed = false;	   	   	   
 
 	if ((byte2 == (char)0xAA) && (byte3 == (char)0x00))
 		// mouse inserted; initialize sending of data

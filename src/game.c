@@ -1,11 +1,12 @@
 #include "game.h"
-#include "../resources/riskMap.h"
-#include "../resources/titleScreen.h"
-#include "../resources/tutorialScreen.h"
 #include "draw.h"
 #include "enums.h"
 #include "globals.h"
 #include "helper.h"
+
+#include "../resources/riskMap.h"
+#include "../resources/titleScreen.h"
+#include "../resources/tutorialScreen.h"
 
 void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int locY[], currPlayer currTurn, currPhase currAction){
 
@@ -99,4 +100,51 @@ void drawTutorialScreen(){
 
     swapBuffers();
     wait_for_vsync();
+}
+
+
+static inline void drawPixel(int x, int y, uWord C){
+    //struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->fbp;
+    //fbp->pixels[y][x] = C;
+    ((struct videoStruct*)VIDEO_BASE)->bfbp->pixels[y][x] = C;
+}
+
+
+void drawCursor(int x_cursor, int y_cursor, int colour, int size){
+  //draw_block(x_cursor, y_cursor, colour, size);
+  for(int x = x_cursor - size; x < x_cursor + size; ++x){
+    drawPixel(x, y_cursor, C_WHITE);
+  }
+  for(int y = y_cursor - size; y < y_cursor + size; ++y){
+    drawPixel(x_cursor, y, C_WHITE);
+  }
+}
+
+void eraseCursor(int x_cursor, int y_cursor, int size, gameStates gameState){
+
+    switch(gameState){
+        case STARTSCREEN:
+            for(int x = x_cursor - size; x = x_cursor + size; ++x){
+                drawPixel(x, y_cursor, titleScreen[y_cursor][x]);
+            }
+            for(int y = y_cursor - size; y = y_cursor + size; ++y){
+                drawPixel(x_cursor, y, titleScreen[y][x_cursor]);
+            }
+            return;
+        case TUTORIAL: 
+            for(int x = x_cursor - size; x = x_cursor + size; ++x){
+                drawPixel(x, y_cursor, tutorialScreen[y_cursor][x]);
+            }
+            for(int y = y_cursor - size; y = y_cursor + size; ++y){
+                drawPixel(x_cursor, y, tutorialScreen[y][x_cursor]);
+            }
+        default:
+            for(int x = x_cursor - size; x = x_cursor + size; ++x){
+                drawPixel(x, y_cursor, riskMap[y_cursor][x]);
+            }
+            for(int y = y_cursor - size; y = y_cursor + size; ++y){
+                drawPixel(x_cursor, y, riskMap[y][x_cursor]);
+            }
+    }
+
 }

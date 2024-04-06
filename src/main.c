@@ -365,7 +365,7 @@ void loadLocations(){
     locationTerritoriesY[30] = 190;
     locationTerritoriesX[31] = 300;
     locationTerritoriesY[31] = 175;
-    locationTerritoriesX[32] = 193;
+    locationTerritoriesX[32] = 293;
     locationTerritoriesY[32] = 144;
     locationTerritoriesX[33] = 253;
     locationTerritoriesY[33] = 95;
@@ -623,7 +623,7 @@ void playerTurn(void){
         placeTroopsIndex = getSelectedTerritory();
         checkValidPlaceTroops = placeTroopsStartOfTurn(placeTroopsIndex, numPlacedTroops);
     }
-    //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+    drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
     printMap();
 
     //phase 2. attack
@@ -646,7 +646,7 @@ void playerTurn(void){
             continue;
         }
     }
-    //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+    drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
     printMap();
 
     printf("Phase 3: Move Troops");
@@ -669,7 +669,7 @@ void playerTurn(void){
         }
     }
 
-    //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+    drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
     printMap();
 }
 
