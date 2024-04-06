@@ -683,7 +683,6 @@ int main(void){
 
 
 
-    int nicks_counter = 0;
     bool mapChanged;
 
     prevState = ENDSCREEN;
@@ -699,9 +698,6 @@ int main(void){
     //FSM for gane state
     while(1){
         if (currState == STARTSCREEN){
-            if(nicks_counter!= 0){ //waiting so that one click doesn't skip you ahead
-                nicks_counter--;
-            }
             //printf("State: StartScreen\n");
             if(prevState != STARTSCREEN)
                 drawTitleScreen();   
@@ -719,15 +715,12 @@ int main(void){
         else if (currState == TUTORIAL){
             printf("State: Tutorial\n");
             drawTutorialScreen();
-            if(nicks_counter!= 0){ //waiting so that one click doesn't skip you ahead
-                nicks_counter--;
-            }else {
-                if(0){ //use this for polling from space bar
-                    printf("Exiting Tutorial\n");
-                    nextState = INGAME;
-                    mapChanged = true;
-                }
+            if(0){ //use this for polling from space bar
+                printf("Exiting Tutorial\n");
+                nextState = INGAME;
+                mapChanged = true;
             }
+            
 
         }
 
@@ -735,7 +728,7 @@ int main(void){
             //in game function
             printf("State: InGame\n");
             if(mapChanged){
-                //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+                drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
                 mapChanged = false;
             }
             //inGameScreenPolling();
@@ -758,7 +751,6 @@ int main(void){
             if(0){ 
                 printf("Exit EndGame Stage");
                 nextState = STARTSCREEN;
-                nicks_counter = 1000000;
             }     
         }
 
