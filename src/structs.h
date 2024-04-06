@@ -2,6 +2,7 @@
 #define STRUCTS_H
 
 #include "globals.h"
+#include <stdbool.h>
 
 //#define uint32 unsigned int
 //#define uWord unsigned short
@@ -18,15 +19,11 @@ struct videoStruct {
 };
 
 typedef struct {
-    short dx;
-    short dy;
-
     short xPos;
     short yPos;
 
-    //char left_pressed_bit;
-    //char right_pressed_bit;
-}cursor;
+    bool clicked;
+}cursor_t;
 
 
 #endif /*STRUCTS_H*/

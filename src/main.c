@@ -5,8 +5,9 @@
 #include <math.h>
 
 #include "game.h"
-
+#include "structs.h"
 #include "enums.h"
+#include "keyboard.h"
 
 gameStates prevState;
 gameStates nextState;
@@ -14,6 +15,9 @@ gameStates currState;
 currPlayer currTurn;
 currPhase currAction;
 //extern mouse_movement movement;
+
+cursor_t cursor;
+
 
 int cursorLoc[2];
 int prevCursorLoc[2];
@@ -694,6 +698,9 @@ int main(void){
     initialBoardSetup();
     loadLocations();
 
+    cursor.xPos = SCREEN_WIDTH /2;
+    cursor.yPos = SCREEN_HEIGHT /2; //start in center;
+
 
     //FSM for gane state
     while(1){
@@ -705,9 +712,10 @@ int main(void){
 
             //start screen polling
             //titleScreenPolling();
-            if(0){ //use this for title screen polling checj
+            if(cursor.clicked){ //use this for title screen polling checj
                 printf("Exit StartScreen");
                 nextState = TUTORIAL;
+                cursor.clicked = false;
             }
 
             
@@ -715,10 +723,11 @@ int main(void){
         else if (currState == TUTORIAL){
             printf("State: Tutorial\n");
             drawTutorialScreen();
-            if(0){ //use this for polling from space bar
+            if(cursor.clicked){ //use this for polling from space bar
                 printf("Exiting Tutorial\n");
                 nextState = INGAME;
                 mapChanged = true;
+                cursor.clicked = false;
             }
             
 
@@ -755,7 +764,11 @@ int main(void){
         }
 
         //update FSM
+        prevState = currState;
         currState = nextState;
+
+        //poll keyboard for any input
+        pollKeyboard();
 
     }
 
