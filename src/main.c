@@ -685,7 +685,7 @@ int main(void){
     printf("Start MAIN\n");
     srand((unsigned int)time(NULL));
 
-
+    //swapBuffers();
 
     bool mapChanged;
 
@@ -700,6 +700,8 @@ int main(void){
 
     cursor.xPos = SCREEN_WIDTH /2;
     cursor.yPos = SCREEN_HEIGHT /2; //start in center;
+
+    clearCharBuffer();
 
 
     //FSM for gane state
@@ -737,22 +739,25 @@ int main(void){
             //in game function
             printf("State: InGame\n");
             if(mapChanged){
+
+
                 drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
                 mapChanged = false;
             }
+            updateCursor();
             //inGameScreenPolling();
             //gameLogic
             bool endGame = checkEndGame();
 
             if (currTurn == PLAYER1){
-                playerTurn();
+                //playerTurn();
                 currTurn = PLAYER2;
             } else {
                 endGame = true;
             }
 
             if(endGame){ 
-                nextState = ENDSCREEN;
+                //nextState = ENDSCREEN;
             }
 
             //either player or ai turn
@@ -775,8 +780,25 @@ int main(void){
         prevState = currState;
         currState = nextState;
 
-        //poll keyboard for any input
         pollKeyboard();
+
+        clearFifo();
+        //poll keyboard for any input
+        // if(prevCursorLoc[0] == cursor.xPos && prevCursorLoc[1] == cursor.yPos){
+        //     continue;
+        // }
+        // //eraseCursor(prevCursorLoc[0], prevCursorLoc[1], 2, currState);
+        // prevCursorLoc[0] = cursor.xPos;
+        // prevCursorLoc[1] = cursor.yPos;
+        // pollKeyboard();
+        // drawCursor(cursor.xPos, cursor.yPos, C_WHITE, 5);
+        // swapBuffers();
+    
+        // clearFifo();
+
+
+
+    
 
     }
 

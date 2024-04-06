@@ -21,4 +21,6 @@ void HEX_PS2(char, char, char);
 //TODO Does this need to be called 3 times?
 void pollKeyboard();
 
+void clearFifo();
+
 #endif // KEYBOARD_H

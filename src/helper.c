@@ -19,7 +19,7 @@ void swap(int *a, int *b){
 }
 
 void swapBuffers(){
-    struct fb_t* temp = ((struct videoStruct*)VIDEO_BASE)->bfbp;
+    struct fb_t* temp = ((struct videoStruct*)VIDEO_BASE)->fbp;
     ((struct videoStruct*)VIDEO_BASE)->fbp = ((struct videoStruct*)VIDEO_BASE)->bfbp;
     ((struct videoStruct*)VIDEO_BASE)->bfbp = temp;
 }

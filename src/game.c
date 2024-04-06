@@ -3,6 +3,7 @@
 #include "enums.h"
 #include "globals.h"
 #include "helper.h"
+#include "keyboard.h"
 
 #include "../resources/riskMap.h"
 #include "../resources/titleScreen.h"
@@ -84,22 +85,64 @@ void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int
         else
             drawChar(locX[i], locY[i], numTroopsOnLoc[i]+48);
     }
+    clearFifo();
+    pollKeyboard();
+    drawCursor(cursor.xPos, cursor.yPos, C_WHITE, 2);
 
-    swapBuffers();
+
+    //swapBuffers();
+    wait_for_vsync();
+    
+    //draw main map  AGAIN, so we can flip and wait for vsync with cursor
+    drawScreen(*riskMap, 222);
+    //putting it on the back buffer
+    for(int i = 0; i < 42; ++i){
+    //get color to draw
+    switch(playerNameOnLoc[i]) {
+        case PLAYER1:
+            col = C_RED;
+            break;
+        case PLAYER2:
+            col = C_BLUE;
+            break;
+        case PLAYER3:
+            col = C_GREEN;
+            break;
+        case PLAYER4:
+            col = C_MAGENTA;
+            break;
+        default:
+            col = C_BLACK; //for debugging
+    }
+
+    //draw rectangle at location
+    int x_i = locX[i] /4 *4;
+    int y_i = locY[i] /4 *4;
+    drawRect(x_i -2, y_i -2, x_i +6, y_i +6, col);
+    } 
+}
+
+void updateCursor(){
+    //erase cursor from 2 buffers ago (or don't idc)
+
+    //draw new cursor
+    drawCursor(cursor.xPos, cursor.yPos, C_WHITE, 2);
     wait_for_vsync();
 }
 
 void drawTitleScreen(){
-    drawScreen(*titleScreen, 240);
+    //drawScreen(*titleScreen, 240);
 
     swapBuffers();
     wait_for_vsync();
+    drawScreen(*titleScreen, 240);
 }
 void drawTutorialScreen(){
     drawScreen(*tutorialScreen, 201);
 
     swapBuffers();
     wait_for_vsync();
+    //drawScreen(*tutorialScreen, 201);
 }
 
 

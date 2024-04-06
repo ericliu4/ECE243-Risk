@@ -110,6 +110,14 @@ void drawString(int x, int y, char* str){
     }
 }
 
+void clearCharBuffer(){
+    for(int y = 0; y < SCREEN_HEIGHT; ++y){
+        for(int x = 0; x < SCREEN_WIDTH; ++x){
+            drawChar(x,y,0);
+        }
+    }
+}
+
 
 
 

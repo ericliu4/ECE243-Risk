@@ -40,30 +40,31 @@ void pollKeyboard(){
 
 	//need to read posedge
 	if(byte2 == (char)0xF0 || byte2 == (char)0xE0){
-		if(keyPressed)
+		if(keyPressed){
 			return;
+		}
 		//read is probably good:
 			switch(byte3){
 				case (char)0x1D: //W key
 				case (char)0x75: //Up arrow (numpad or regular)
 					//no need to check only for negedge
-					if(cursor.yPos < SCREEN_HEIGHT -1)
-						cursor.yPos += 1;
+					if(cursor.yPos < SCREEN_HEIGHT -2)
+						cursor.yPos += 2;
 					break;
 				case (char)0x1C: //A key
 				case (char)0x6B: //left arrow
-					if(cursor.xPos > 1)
-						cursor.xPos -= 1;
+					if(cursor.xPos > 2)
+						cursor.xPos -= 2;
 					break;
 				case (char)0x1B: //S key
-				case (char)0x72: //down arrow
-				if(cursor.yPos > 1)
-					cursor.yPos -= 1;
+				case (char)0x74: //down arrow
+				if(cursor.yPos > 2)
+					cursor.yPos -= 2;
 					break;
 				case (char)0x23: //D key
-				case (char)0x74: //right arrow
-					if(cursor.xPos < SCREEN_WIDTH -1)
-						cursor.xPos += 1;
+				case (char)0x72: //right arrow
+					if(cursor.xPos < SCREEN_WIDTH -2)
+						cursor.xPos += 2;
 					break;
 				case (char)0x29:
 				case (char)0x5A:
@@ -106,4 +107,18 @@ void HEX_PS2(char b1, char b2, char b3) {
 	/* drive the hex displays */
 	*(HEX3_HEX0_ptr) = *(int *)(hex_segs);
 	*(HEX5_HEX4_ptr) = *(int *)(hex_segs + 4);
+}
+
+
+void clearFifo(){
+	int PS2_data, RVALID;
+	while(1){
+		PS2_data = *(PS2_ptr); // read the Data register in the PS/2 port
+		RVALID = PS2_data & 0x8000; // extract the RVALID field
+		if (RVALID) { //if there are some value:
+			continue;
+		}
+		return;
+	}
+
 }

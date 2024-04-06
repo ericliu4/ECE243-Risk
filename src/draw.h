@@ -39,4 +39,6 @@ void drawChar(int x, int y, char c);
 
 void drawString(int x, int y, char* str);
 
+void clearCharBuffer();
+
 #endif /*DRAW_H*/
