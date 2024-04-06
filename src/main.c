@@ -405,7 +405,7 @@ bool attack(int location1, int location2){
 /*Calculate the number of troops given to player at start of turn
     - minimum 3 + 1 for every 3 occupying territories.
     -if player owns a continent, get continental bonus*/
-bool calculateNumTroops(currPlayer turnPlayer){
+int calculateNumTroops(currPlayer turnPlayer){
     int troops = 0;
     int count = 0;
     for (int currTerritory = 0; currTerritory < numCountries; currTerritory++){
@@ -486,10 +486,12 @@ bool calculateNumTroops(currPlayer turnPlayer){
     if (bonus){
         troops += 7;
     }
-    if (count / 3 < 3){
+    if (count/3 <= 3){
         count = 9;
     }
-    return troops + count/3;
+    int total = troops + count/3;
+    printf("ADDED %d Troops\n", total);
+    return total;
 }
 /*Move troops from player's territory 1 to territory 2
     - returns true if move is valid
@@ -514,7 +516,8 @@ bool placeTroopsStartOfTurn(int location, int numberToPlace){
     if (playerNameOnTerritory[location] != currTurn){
         return false;
     }
-    numTroopsOnTerritory[location] += numberToPlace;
+    printf("%d BEFORE, %d PLACED \n",numTroopsOnTerritory[location], numberToPlace);
+    numTroopsOnTerritory[location] = numTroopsOnTerritory[location] + numberToPlace;
     return true;
 }
 
@@ -667,8 +670,16 @@ void playerTurn(void){
     printf("Phase 1: place troops\n");
     int placeTroopsIndex = getSelectedTerritory();
     int numPlacedTroops = calculateNumTroops(PLAYER1);
-    placeTroopsStartOfTurn(placeTroopsIndex, numPlacedTroops);
+    printf("NUM PLACED TROOPZ VAR %d \n", numPlacedTroops);
+    bool checkValidPlaceTroops = placeTroopsStartOfTurn(placeTroopsIndex, numPlacedTroops);
+    while (!checkValidPlaceTroops){
+        printf("ILLEGAL MOVE!! TRY AGAIN\n");
+        placeTroopsIndex = getSelectedTerritory();
+        checkValidPlaceTroops = placeTroopsStartOfTurn(placeTroopsIndex, numPlacedTroops);
+    }
     //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+    printMap();
+
     //phase 2. attack
     printf("Phase 2: attack\n");
     bool valid = true;
@@ -682,6 +693,7 @@ void playerTurn(void){
             continue;
         }
         int getSecondLocation = getSelectedTerritory();
+        printf("GOT TO ATTACK, TYPE 99 to end attack phase\n");
         bool success = attack(getFirstLocation, getSecondLocation);
         if (success == false){
             printf("Illegal Move!!\n");
@@ -689,6 +701,7 @@ void playerTurn(void){
         }
     }
     //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+    printMap();
 
     printf("Phase 3: Move Troops");
     valid = true;
@@ -705,10 +718,13 @@ void playerTurn(void){
         if (success == false){
             printf("Illegal Move!!\n");
             continue;
+        } else {
+            valid = false;
         }
     }
 
     //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+    printMap();
 }
 
 /*
