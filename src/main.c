@@ -405,7 +405,7 @@ bool attack(int location1, int location2){
 /*Calculate the number of troops given to player at start of turn
     - minimum 3 + 1 for every 3 occupying territories.
     -if player owns a continent, get continental bonus*/
-bool calculateNumTroopz(currPlayer turnPlayer){
+bool calculateNumTroops(currPlayer turnPlayer){
     int troops = 0;
     int count = 0;
     for (int currTerritory = 0; currTerritory < numCountries; currTerritory++){
@@ -651,7 +651,7 @@ void playerTurn(void){
     //phase 1. place troops
     printf("Phase 1: place troops\n");
     int placeTroopsIndex = getSelectedTerritory();
-    int numPlacedTroops = getNumPlaceTroops(PLAYER1);
+    int numPlacedTroops = calculateNumTroops(PLAYER1);
     placeTroopsStartOfTurn(placeTroopsIndex, numPlacedTroops);
     //drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
     //phase 2. attack
@@ -742,7 +742,6 @@ int main(void){
             if(movement.left_pressed_bit){ //use this for title screen polling checj
                 printf("Exit StartScreen");
                 nextState = TUTORIAL;
-                nicks_counter = 1000000;
             }
 
             
@@ -794,11 +793,10 @@ int main(void){
         }
 
         //update FSM
-        prevState = currState;
         currState = nextState;
 
         //handle mouse stuff
-
+        //DELETE THIS???
         PS2_data = *(PS2_ptr);        // read the Data register in the PS/2 port
         RVALID   = PS2_data & 0x8000; // extract the RVALID field
         if (RVALID) {
