@@ -24,9 +24,9 @@ typedef struct {
     short xPos;
     short yPos;
 
-    char left_pressed_bit;
-    char right_pressed_bit;
-}mouse_movement;
+    //char left_pressed_bit;
+    //char right_pressed_bit;
+}cursor;
 
 
 #endif /*STRUCTS_H*/

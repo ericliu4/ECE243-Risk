@@ -5,13 +5,8 @@
 #include <math.h>
 
 #include "game.h"
-#include "mouse.h"
-#include "../ps2/address_map_nios2.h"
-#include "../ps2/PS2.h"
 
 #include "enums.h"
-// PS/2 port address
-//#define PS2_ptr ((volatile int *) 0xFF200100) 
 
 gameStates prevState;
 gameStates nextState;
@@ -576,60 +571,7 @@ void initialBoardSetup(){
     }
 }
 
-/*
-int inputPolling() {
-    int PS2_data, RVALID;
-    unsigned char byte1, byte2, byte3;
 
-    PS2_data = *PS2_ptr; 
-    RVALID = (PS2_data & 0x8000);  
-    if (RVALID) {
-        byte1 = byte2;
-        byte2 = byte3;
-        byte3 = PS2_data & 0xFF;
-
-        //check for left button here
-        if (byte1 & 0x01) { 
-            return 1; 
-        }
-    }
-    return 0; // No click detected
-}
-
-
-void titleScreenPolling(){
-    //currently changed to terminal input for testing
-    printf("currently polling for input\n");
-    while (1) {
-        if (inputPolling()) {
-            return; 
-        }
-        // usleep(10000); to wait for 10ms??
-    }
-}
-
-void endGamePolling(){
-    int val;
-    printf("currently polling for input\n");
-    scanf("%d", &val);
-}
-
-void tutorialScreenPolling(){
-    int val;
-    printf("currently polling for input\n");
-    while (1) {
-        if (inputPolling()) {
-            return; 
-        }
-        // usleep(10000); to wait for 10ms??
-    }
-}
-
-void inGameScreenPolling(){
-    int val;
-    printf("currently polling for input\n");
-    scanf("%d", &val);
-}*/
 
 /*Check if all the territories is occupied by the same player
 */
@@ -739,10 +681,7 @@ int main(void){
     printf("Start MAIN\n");
     srand((unsigned int)time(NULL));
 
-    //volatile int * PS2_ptr = (int *)PS2_BASE;
 
-    int  PS2_data, RVALID;
-    char byte1 = 0, byte2 = 0, byte3 = 0;
 
     int nicks_counter = 0;
     bool mapChanged;
@@ -770,7 +709,7 @@ int main(void){
 
             //start screen polling
             //titleScreenPolling();
-            if(movement.left_pressed_bit){ //use this for title screen polling checj
+            if(0){ //use this for title screen polling checj
                 printf("Exit StartScreen");
                 nextState = TUTORIAL;
             }
@@ -783,7 +722,7 @@ int main(void){
             if(nicks_counter!= 0){ //waiting so that one click doesn't skip you ahead
                 nicks_counter--;
             }else {
-                if(movement.left_pressed_bit){ //use this for polling from space bar
+                if(0){ //use this for polling from space bar
                     printf("Exiting Tutorial\n");
                     nextState = INGAME;
                     mapChanged = true;
@@ -816,7 +755,7 @@ int main(void){
             //drawEndGame(); <- make sure to pass through if the player won or lost
             bool playerWon = checkIfPlayerWIn();
             //drawEndGame(playerWon); <- make sure to pass through if the player won or lost
-            if(movement.left_pressed_bit){ 
+            if(0){ 
                 printf("Exit EndGame Stage");
                 nextState = STARTSCREEN;
                 nicks_counter = 1000000;
@@ -825,31 +764,6 @@ int main(void){
 
         //update FSM
         currState = nextState;
-
-        //handle mouse stuff
-        //DELETE THIS???
-        PS2_data = *(PS2_ptr);        // read the Data register in the PS/2 port
-        RVALID   = PS2_data & 0x8000; // extract the RVALID field
-        if (RVALID) {
-            /* shift the next data byte into the display */
-            byte1 = byte2;
-            byte2 = byte3;
-            byte3 = PS2_data & 0xFF;
-            if(byte1 & 0x08){ //checking for "always 1" bit
-                HEX_PS2(byte1, byte2, byte3);
-
-                //draw mouse cursor:
-                
-
-
-            } /* else{
-                printf("Bytes not lined up!\n");
-            }*/
-
-            if ((byte2 == (char)0xAA) && (byte3 == (char)0x00))
-                // mouse inserted; initialize sending of data
-                *(PS2_ptr) = 0xF4;
-        }
 
     }
 
