@@ -597,15 +597,15 @@ int getSelectedTerritory(){
             cursor.clicked = false;
             for(int i = 0; i < 42; ++i){
                 if(numTroopsOnTerritory[i] < 10){
-                    if(cursor.xPos <= locationTerritoriesX[i] +6 && cursor.xPos >= locationTerritoriesX[i] -2){
-                        if(cursor.yPos <= locationTerritoriesY[i] +6 && cursor.yPos >= locationTerritoriesY[i] -2){
+                    if(cursor.xPos <= locationTerritoriesX[i] +4 && cursor.xPos >= locationTerritoriesX[i] -4){
+                        if(cursor.yPos <= locationTerritoriesY[i] +4 && cursor.yPos >= locationTerritoriesY[i] -4){
                             printf("Found a territory");
                             return i;
                         }
                     }
                 } else {
-                    if(cursor.xPos <= locationTerritoriesX[i] +10 && cursor.xPos >= locationTerritoriesX[i] -2){
-                        if(cursor.yPos <= locationTerritoriesY[i] +10 && cursor.yPos >= locationTerritoriesY[i] -2){
+                    if(cursor.xPos <= locationTerritoriesX[i] +10 && cursor.xPos >= locationTerritoriesX[i] -4){
+                        if(cursor.yPos <= locationTerritoriesY[i] +10 && cursor.yPos >= locationTerritoriesY[i] -4){
                             printf("Found a territory");
                             return i;
                         }
@@ -880,7 +880,7 @@ int main(void){
             }
 
             if(endGame){ 
-                //nextState = ENDSCREEN;
+                nextState = ENDSCREEN;
             }
 
             //either player or ai turn
