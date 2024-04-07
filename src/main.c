@@ -589,11 +589,30 @@ bool checkEndGame(void){
 }
 
 /*Temporary Function. Will be replaced by Nick's code
+Returns the selected territory index
 */
 int getSelectedTerritory(){
-    int a;
-    scanf("%d", &a);
-    return a;
+    // int a;
+    // scanf("%d", &a);
+    // return a;
+    while(1){
+        // poll keyboard
+
+        updateCursor();
+
+        if(cursor.clicked){
+            for(int i = 0; i < 42; ++i){
+                if(cursor.xPos < locationTerritoriesX[i] +2 && cursor.xPos > locationTerritoriesX[i] -2){
+                    if(cursor.yPos < locationTerritoriesY[i] +2 && cursor.yPos > locationTerritoriesY[i] -2){
+                        return i;
+                    }
+                }
+            }
+        }
+
+    }
+
+    //return -1;
 }
 
 void printMap(void){
@@ -746,13 +765,13 @@ int main(void){
                 drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction); //call twice so it draws on both buffers
                 mapChanged = false;
             }
-            updateCursor();
+            //updateCursor();
             //inGameScreenPolling();
             //gameLogic
             bool endGame = checkEndGame();
 
             if (currTurn == PLAYER1){
-                //playerTurn();
+                playerTurn();
                 currTurn = PLAYER2;
             } else {
                 endGame = true;

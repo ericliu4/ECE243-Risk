@@ -12,6 +12,9 @@
 
 extern struct fb_t* buffer;
 
+int prevCursorLoc1[2] = {0};
+int prevCursorLoc2[2] = {0};
+
 void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int locY[], currPlayer currTurn, currPhase currAction){
 
     //TODO - This should put all of this on the back buffer, then flip the buffers and "wait for vsync"
@@ -24,16 +27,16 @@ void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int
     switch(currTurn){
         case PLAYER1:
         //TODO: Maybe draw a rectangle behind this of the color?
-            drawString(80, 228, "Player 1 (Red)");
+            drawString(80, 228, "Player 1 (Red)        ");
             break;
         case PLAYER2:
-            drawString(80, 228, "Player 2 (Blue)");
+            drawString(80, 228, "Player 2 (Blue)       ");
             break;
         case PLAYER3:
-            drawString(80, 228, "Player 3 (Green)");
+            drawString(80, 228, "Player 3 (Green)      ");
             break;
         case PLAYER4:
-            drawString(80, 228, "Player 4 (Magenta)");
+            drawString(80, 228, "Player 4 (Magenta)    ");
             break;
         default:
             drawString(80, 228, "ERROR (improper player)");
@@ -100,7 +103,12 @@ void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int
 
 void updateCursor(){
     //erase cursor from 2 buffers ago (or don't idc)
-
+    eraseCursor(prevCursorLoc2[0], prevCursorLoc2[1], 2, INGAME);
+    prevCursorLoc2[0] = prevCursorLoc1[0];
+    prevCursorLoc2[1] = prevCursorLoc1[1];
+    prevCursorLoc1[0] = cursor.xPos;
+    prevCursorLoc1[1] = cursor.yPos;
+    pollKeyboard();
     //draw new cursor
     drawCursor(cursor.xPos, cursor.yPos, C_WHITE, 2);
     swapBuffers();
@@ -133,10 +141,10 @@ static inline void drawPixel(int x, int y, uWord C){
 
 void drawCursor(int x_cursor, int y_cursor, int colour, int size){
   //draw_block(x_cursor, y_cursor, colour, size);
-  for(int x = x_cursor - size; x < x_cursor + size; ++x){
+  for(int x = x_cursor - size; x <= x_cursor + size; ++x){
     drawPixel(x, y_cursor, C_WHITE);
   }
-  for(int y = y_cursor - size; y < y_cursor + size; ++y){
+  for(int y = y_cursor - size; y <= y_cursor + size; ++y){
     drawPixel(x_cursor, y, C_WHITE);
   }
 }
@@ -145,25 +153,25 @@ void eraseCursor(int x_cursor, int y_cursor, int size, gameStates gameState){
 
     switch(gameState){
         case STARTSCREEN:
-            for(int x = x_cursor - size; x = x_cursor + size; ++x){
+            for(int x = x_cursor - size; x <= x_cursor + size; ++x){
                 drawPixel(x, y_cursor, titleScreen[y_cursor][x]);
             }
-            for(int y = y_cursor - size; y = y_cursor + size; ++y){
+            for(int y = y_cursor - size; y <= y_cursor + size; ++y){
                 drawPixel(x_cursor, y, titleScreen[y][x_cursor]);
             }
             return;
         case TUTORIAL: 
-            for(int x = x_cursor - size; x = x_cursor + size; ++x){
+            for(int x = x_cursor - size; x <= x_cursor + size; ++x){
                 drawPixel(x, y_cursor, tutorialScreen[y_cursor][x]);
             }
-            for(int y = y_cursor - size; y = y_cursor + size; ++y){
+            for(int y = y_cursor - size; y <= y_cursor + size; ++y){
                 drawPixel(x_cursor, y, tutorialScreen[y][x_cursor]);
             }
         default:
-            for(int x = x_cursor - size; x = x_cursor + size; ++x){
+            for(int x = x_cursor - size; x <= x_cursor + size; ++x){
                 drawPixel(x, y_cursor, riskMap[y_cursor][x]);
             }
-            for(int y = y_cursor - size; y = y_cursor + size; ++y){
+            for(int y = y_cursor - size; y <= y_cursor + size; ++y){
                 drawPixel(x_cursor, y, riskMap[y][x_cursor]);
             }
     }
