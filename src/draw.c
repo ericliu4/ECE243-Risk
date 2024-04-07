@@ -87,6 +87,15 @@ void drawRect(int x_i, int y_i, int width, int height, uWord c){
 	}
 }
 
+void drawRectInBackdrop(int img[], int x_i, int y_i, int width, int height, uWord c){
+	//struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
+	for(int y = y_i; y < height; ++y) {
+		for(int x = x_i; x < width; ++x) {
+			img[y * SCREEN_WIDTH + x] = c;	//could modify to use drawPixel but I don't think it makes a difference
+		}
+	}
+}
+
 
 static inline void drawPixel(int x, int y, uWord C){
     //struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->fbp;
