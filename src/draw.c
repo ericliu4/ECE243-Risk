@@ -162,15 +162,13 @@ void wait_for_vsync(){ //I don't fully understand how this works but whatever
 }
 
 
-
-
 void swapBuffers(){
     volatile int* pixel_ctrl_ptr = (int*) 0xff203020;
     //swap values of display and buffer
     struct fb_t* temp = display;
     display = buffer;
     buffer = temp;
-    *(pixel_ctrl_ptr +1) = (int) &display;
+    *(pixel_ctrl_ptr +1) = (int)(display->pixels);
 
 
     // struct fb_t* temp = ((struct videoStruct*)VIDEO_BASE)->fbp;

@@ -722,9 +722,10 @@ int main(void){
             
         }
         else if (currState == TUTORIAL){
-            printf("State: Tutorial\n");
-            if(prevState != TUTORIAL)
+            if(prevState != TUTORIAL){
+                printf("State: Tutorial\n");
                 drawTutorialScreen();
+            }
             if(cursor.clicked){ //use this for polling from space bar
                 printf("Exiting Tutorial\n");
                 nextState = INGAME;
@@ -737,11 +738,12 @@ int main(void){
 
          else if (currState == INGAME){
             //in game function
-            printf("State: InGame\n");
-            if(mapChanged){
 
+            if(mapChanged){
+                printf("State: InGame\n");
 
                 drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+                drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction); //call twice so it draws on both buffers
                 mapChanged = false;
             }
             updateCursor();

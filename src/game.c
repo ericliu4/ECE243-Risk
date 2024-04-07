@@ -93,36 +93,9 @@ void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int
     drawCursor(cursor.xPos, cursor.yPos, C_WHITE, 2);
 
 
-    //swapBuffers();
+    swapBuffers();
     wait_for_vsync();
-    
-    //draw main map  AGAIN, so we can flip and wait for vsync with cursor
-    drawScreen(*riskMap, 222);
-    //putting it on the back buffer
-    for(int i = 0; i < 42; ++i){
-    //get color to draw
-    switch(playerNameOnLoc[i]) {
-        case PLAYER1:
-            col = C_RED;
-            break;
-        case PLAYER2:
-            col = C_BLUE;
-            break;
-        case PLAYER3:
-            col = C_GREEN;
-            break;
-        case PLAYER4:
-            col = C_MAGENTA;
-            break;
-        default:
-            col = C_BLACK; //for debugging
-    }
 
-    //draw rectangle at location
-    int x_i = locX[i] /4 *4;
-    int y_i = locY[i] /4 *4;
-    drawRect(x_i -2, y_i -2, x_i +6, y_i +6, col);
-    } 
 }
 
 void updateCursor(){
@@ -130,6 +103,7 @@ void updateCursor(){
 
     //draw new cursor
     drawCursor(cursor.xPos, cursor.yPos, C_WHITE, 2);
+    swapBuffers();
     wait_for_vsync();
 }
 
