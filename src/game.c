@@ -87,7 +87,7 @@ void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int
             unsigned char right = numTroopsOnLoc[i] /10 +48;
             drawChar(locX[i], locY[i], right);
             drawChar(locX[i] +4, locY[i], left);
-            drawRectInBackdrop(*riskMap, x_i -2, y_i -2, x_i +10, y_i +10, col);
+            drawRectInBackdrop(*riskMap, x_i -2, y_i -2, x_i +10, y_i +6, col);
         }     
         else{
             drawChar(locX[i], locY[i], numTroopsOnLoc[i]+48);
