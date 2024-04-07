@@ -604,10 +604,12 @@ int getSelectedTerritory(){
             for(int i = 0; i < 42; ++i){
                 if(cursor.xPos < locationTerritoriesX[i] +2 && cursor.xPos > locationTerritoriesX[i] -2){
                     if(cursor.yPos < locationTerritoriesY[i] +2 && cursor.yPos > locationTerritoriesY[i] -2){
+                        cursor.clicked = false;
                         return i;
                     }
                 }
             }
+        cursor.clicked = false;
         }
 
     }
