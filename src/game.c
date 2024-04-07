@@ -19,8 +19,7 @@ void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int
 
     //TODO - This should put all of this on the back buffer, then flip the buffers and "wait for vsync"
 
-    //draw main map
-    drawScreen(*riskMap, 222);
+
 
     //draw current player and stuff
     drawString(16, 228, "Current Player: ");
@@ -77,7 +76,8 @@ void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int
         //draw rectangle at location
         int x_i = locX[i] /4 *4;
         int y_i = locY[i] /4 *4;
-        drawRect(x_i -2, y_i -2, x_i +6, y_i +6, col);
+        //drawRect(x_i -2, y_i -2, x_i +6, y_i +6, col);
+        drawRectInBackdrop(*riskMap, x_i -2, y_i -2, x_i +6, y_i +6, col);
 
         //draw number of troops at location
         if(numTroopsOnLoc[i] < 0)
@@ -91,6 +91,8 @@ void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int
         else
             drawChar(locX[i], locY[i], numTroopsOnLoc[i]+48);
     }
+        //draw main map
+    drawScreen(*riskMap, 222);
     clearFifo();
     pollKeyboard();
     drawCursor(cursor.xPos, cursor.yPos, C_WHITE, 2);
