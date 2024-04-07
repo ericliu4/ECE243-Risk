@@ -722,7 +722,12 @@ void machineTurn(){
             }
         }
     }
-    //since the machine move is 100% legal, directly
+    //exit function if current ai already lost
+    if (inGame == false){
+        return;
+    }
+
+    //since the machine move is 100% legal, directly call attack function
     int numPlacedTroops = calculateNumTroops(currTurn);
     bool success = placeTroopsStartOfTurn(currAddTroopIndex, numPlacedTroops);
     printf("Successfully placed troops");
