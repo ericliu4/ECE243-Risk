@@ -642,6 +642,8 @@ void playerTurn(void){
         checkValidPlaceTroops = placeTroopsStartOfTurn(placeTroopsIndex, numPlacedTroops);
     }
     drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+    drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+    //printMap();
     //printMap();
 
     //phase 2. attack
@@ -664,6 +666,7 @@ void playerTurn(void){
             continue;
         } else {
             drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+            drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
         }
     }
     drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
@@ -673,7 +676,7 @@ void playerTurn(void){
     valid = true;
     while(valid){
         int getFirstLocation = getSelectedTerritory();
-        if (getFirstLocation == 99){
+        if (getFirstLocation == -1){
             break;
         } else if (playerNameOnTerritory[getFirstLocation] != PLAYER1) {
             printf("Illegal Move!!\n");
@@ -690,6 +693,8 @@ void playerTurn(void){
     }
 
     drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+    drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+    //printMap();
     //printMap();
 }
 /*
@@ -728,6 +733,9 @@ void machineTurn(){
     bool success = placeTroopsStartOfTurn(currAddTroopIndex, numPlacedTroops);
     printf("Successfully placed troops");
 
+    drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+    drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+
     //attack phase. machine will only attack 0 or 1 territories
     if ((rand()%100) < 50){
         printf("AI will not attack this round\n");
@@ -758,6 +766,8 @@ void machineTurn(){
         }
         bool attackedworked = attack(attackTerritory, defendTerritory);
     }
+    drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+    drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
     //complete attack phase
 
     //for move phase, ignore
@@ -829,13 +839,15 @@ int main(void){
          else if (currState == INGAME){
             //in game function
 
-            if(mapChanged){
+            /*if(mapChanged){
                 printf("State: InGame\n");
 
                 drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
                 drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction); //call twice so it draws on both buffers
                 mapChanged = false;
-            }
+            }*/
+            drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+            drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction); //call twice so it draws on both buffers
             //updateCursor();
             //inGameScreenPolling();
             //gameLogic
@@ -894,10 +906,6 @@ int main(void){
         // swapBuffers();
     
         // clearFifo();
-
-
-
-    
 
     }
 
