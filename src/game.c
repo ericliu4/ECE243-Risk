@@ -83,13 +83,14 @@ void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int
         if(numTroopsOnLoc[i] < 0)
             numTroopsOnLoc[i] = 0; //error checking in case eric's code breaks... just in case :)
         if(numTroopsOnLoc[i] >9){
-            char left = numTroopsOnLoc[i] %10 +48;
-            char right = numTroopsOnLoc[i] /10 +48;
-            drawChar(locX[i]-2, locY[i]-2, left);
-            drawChar(locX[i]+2, locY[i]+2, right);
+            unsigned char left = numTroopsOnLoc[i] %10 +48;
+            unsigned char right = numTroopsOnLoc[i] /10 +48;
+            drawChar(locX[i], locY[i], left);
+            drawChar(locX[i] +4, locY[i], right);
         }     
         else
             drawChar(locX[i], locY[i], numTroopsOnLoc[i]+48);
+            drawChar(locX[i] +4, locY[i], 0);
     }
         //draw main map
     drawScreen(*riskMap, 222);
