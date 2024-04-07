@@ -704,7 +704,30 @@ then follow the same 3 steps
 3. move at end of turn
 */
 void machineTurn(){
-    printf("machine turn\n");\
+    printf("machine turn\n");
+    //first check if this currPlayer still in game
+    bool inGame = false;
+    int currAddTroopIndex = -1;
+    for (int i = 0; i < numCountries; i++){
+        if (playerNameOnTerritory[i] == currTurn){
+            inGame = true;
+            if (currAddTroopIndex == -1){
+                currAddTroopIndex = i;
+            } else {
+                //25% chance to replace the index
+                //randomness factor here
+                if ((rand()%100) < 25){
+                    currAddTroopIndex = i;
+                }
+            }
+        }
+    }
+    //since the machine move is 100% legal, directly
+    int numPlacedTroops = calculateNumTroops(currTurn);
+    bool success = placeTroopsStartOfTurn(currAddTroopIndex, numPlacedTroops);
+    printf("Successfully placed troops");
+
+    
 }
 
 /*
