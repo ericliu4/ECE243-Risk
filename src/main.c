@@ -397,6 +397,8 @@ bool attack(int location1, int location2){
         return false;
     } 
     //Simulate attack by using dicerolls
+    printf("Got to dice rolls\n");
+    printf("%d, %d \n", location1, location2);
     diceRolls(location1, location2);
     return true;
 }
