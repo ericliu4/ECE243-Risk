@@ -649,7 +649,7 @@ void playerTurn(void){
     bool valid = true;
     while(valid){
         int getFirstLocation = getSelectedTerritory();
-        if (getFirstLocation == 99){
+        if (getFirstLocation == -1){
             valid = false;
             break;
         } else if (playerNameOnTerritory[getFirstLocation] != PLAYER1){
@@ -662,6 +662,8 @@ void playerTurn(void){
         if (success == false){
             printf("Illegal Move TERRITORY 22222!!\n");
             continue;
+        } else {
+            drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
         }
     }
     drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
