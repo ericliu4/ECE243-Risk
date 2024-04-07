@@ -71,6 +71,9 @@ void pollKeyboard(){
 					cursor.clicked = true;
 					keyPressed = true;
 					return;
+				case (char)0x15:
+					cursor.q = true;
+					keyPressed = true;
 			}
 
 	} 

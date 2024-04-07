@@ -23,6 +23,7 @@ typedef struct {
     short yPos;
 
     bool clicked;
+    bool q; //goes to 1 when q is clicked
 }cursor_t;
 
 
