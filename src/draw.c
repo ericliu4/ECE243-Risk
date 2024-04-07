@@ -87,6 +87,18 @@ void drawRect(int x_i, int y_i, int width, int height, uWord c){
 	}
 }
 
+void drawHollowRect(int x_i, int y_i, int width, int height, uWord c){
+    //struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
+    for(int y = y_i; y < height; ++y) {
+        buffer->pixels[y][x_i] = c;
+        buffer->pixels[y][width] = c;
+    }
+    for(int x = x_i; x < width; ++x) {
+        buffer->pixels[y_i][x] = c;
+        buffer->pixels[height][x] = c;
+    }
+}
+
 void drawRectInBackdrop(unsigned short img[], int x_i, int y_i, int width, int height, uWord c){
 	//struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
 	for(int y = y_i; y < height; ++y) {
