@@ -120,7 +120,7 @@ void updateCursor(){
     prevCursorLoc1[1] = cursor.yPos;
     pollKeyboard();
     //draw new cursor
-    drawCursor(cursor.xPos, cursor.yPos, C_WHITE, 2);
+    drawCursor(cursor.xPos, cursor.yPos, C_BLACK, 2);
     swapBuffers();
     wait_for_vsync();
 }

@@ -8,6 +8,7 @@
 #include "structs.h"
 #include "enums.h"
 #include "keyboard.h"
+#include "draw.h"
 
 gameStates prevState;
 gameStates nextState;
@@ -673,6 +674,15 @@ void playerTurn(void){
             printf("Illegal Move TERRITORY 1!!\n");
             continue;
         }
+        //but a box around selected tutorial
+        int x_i = locationTerritoriesX[getFirstLocation] /4 *4;
+        int y_i = locationTerritoriesY[getFirstLocation] /4 *4;
+        for(int i = 0; i < 2; ++i){
+            drawHollowRect(x_i -2, y_i -2, x_i +6, y_i +6, C_WHITE);
+            swapBuffers();
+            wait_for_vsync();
+        }
+
         int getSecondLocation = getSelectedTerritory();
         printf("GOT TO ATTACK, TYPE 99 to end attack phase\n");
         bool success = attack(getFirstLocation, getSecondLocation);
@@ -783,6 +793,23 @@ void machineTurn(){
                     }
                 }
             }
+        }
+                //but a box around selected tutorial
+        int x_i = locationTerritoriesX[attackTerritory] /4 *4;
+        int y_i = locationTerritoriesY[attackTerritory] /4 *4;
+        for(int i = 0; i < 2; ++i){
+            drawHollowRect(x_i -2, y_i -2, x_i +6, y_i +6, C_WHITE);
+            swapBuffers();
+            wait_for_vsync();
+        }
+
+                        //but a box around selected tutorial
+        x_i = locationTerritoriesX[defendTerritory] /4 *4;
+        y_i = locationTerritoriesY[defendTerritory] /4 *4;
+        for(int i = 0; i < 2; ++i){
+            drawHollowRect(x_i -2, y_i -2, x_i +6, y_i +6, C_BLACK);
+            swapBuffers();
+            wait_for_vsync();
         }
         bool attackedworked = attack(attackTerritory, defendTerritory);
     }

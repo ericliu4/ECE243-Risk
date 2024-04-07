@@ -29,6 +29,8 @@ void drawLine(int x0, int y0, int x1, int y1, int color);
 //draws a filled rectangle
 void drawRect(int x_i, int y_i, int width, int height, uWord c);
 
+void drawHollowRect(int x_i, int y_i, int width, int height, uWord c);
+
 void drawRectInBackdrop(unsigned short img[], int x_i, int y_i, int width, int height, uWord c);
 
 //draws an 8x8 sprite starting at x_i, y_i
