@@ -550,22 +550,6 @@ void initialBoardSetup(){
             playerNameOnTerritory[randomTerritoryNumbers[i]] = PLAYER4;
         }
     }
-    //printf("GOT TO HERE");
-    //complete randomly distributing players
-    /*
-    for (int i = 0; i < numCountries; i++){
-        currPlayer player = playerNameOnTerritory[i];
-        if (player == PLAYER1){
-            printf("Player1\n");
-        } else if (player == PLAYER2){
-            printf("Player2\n");
-        } else if (player == PLAYER3){
-            printf("Player3\n");
-        } else {
-            printf("Player4\n");
-        }
-    }
-    */
     
 
     //set up random amount of troops starting
@@ -907,24 +891,6 @@ int main(void){
 
     }
 
-    //testing dice roll function
-    numTroopsOnTerritory[0] = 10;
-    numTroopsOnTerritory[1] = 10;
-    playerNameOnTerritory[0] = 2; // Assuming player names are represented as integers
-    playerNameOnTerritory[1] = 3;
-
-    // Call the diceRolls function for territories 0 and 1
-    bool result = diceRolls(0, 1);
-
-    // Print the result
-    printf("Result of the battle: %s\n", result ? "Victory" : "Defeat");
-    printf("Troops on territory 0: %d\n", numTroopsOnTerritory[0]);
-    printf("Troops on territory 1: %d\n", numTroopsOnTerritory[1]);
-    printf("Player owning territory 0: %d\n", playerNameOnTerritory[0]);
-    printf("Player owning territory 1: %d\n", playerNameOnTerritory[1]);
-
-
-    printf("done!!");
     
     return 0;
 }
