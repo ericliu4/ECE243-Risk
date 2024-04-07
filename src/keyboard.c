@@ -57,12 +57,12 @@ void pollKeyboard(){
 						cursor.xPos -= 2;
 					return;
 				case (char)0x1B: //S key
-				case (char)0x74: //down arrow
+				case (char)0x72: //down arrow
 				if(cursor.yPos < SCREEN_HEIGHT -2)
 					cursor.yPos += 2;
 					return;
 				case (char)0x23: //D key
-				case (char)0x72: //right arrow
+				case (char)0x74: //right arrow
 					if(cursor.xPos < SCREEN_WIDTH -2)
 						cursor.xPos += 2;
 					return;

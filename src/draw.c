@@ -8,15 +8,24 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+struct fb_t bb;
+struct fb_t fb;
+
+//set buffer variable to back buffer
+struct fb_t* buffer = &bb;
+struct fb_t* display = &fb;
+
+
+
 void clearScreen(){
-    struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
+    //struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
     for (int y = 0; y < SCREEN_HEIGHT; y++)
         for (int x = 0; x < SCREEN_WIDTH; x++)
             buffer->pixels[y][x] = C_BLACK;
 }
 
 void fillScreen(uWord c){
-    struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
+    //struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
     for (int y = 0; y < SCREEN_HEIGHT; y++)
         for (int x = 0; x < SCREEN_WIDTH; x++)
             buffer->pixels[y][x] = c;
@@ -24,13 +33,13 @@ void fillScreen(uWord c){
 
 
 void drawHLine(uWord c, int y){
-    struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
+    //struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
     for (int x = 0; x < SCREEN_WIDTH; x++){
         buffer->pixels[y][x] = c;
     }
 }
 void drawVLine(uWord c, int x){
-    struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
+    //struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
     for (int y = 0; y < SCREEN_HEIGHT; y++){
         buffer->pixels[y][x] = c;
     }
@@ -70,7 +79,7 @@ void drawLine(int x0, int y0, int x1, int y1, int color){
 }
 
 void drawRect(int x_i, int y_i, int width, int height, uWord c){
-	struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
+	//struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
 	for(int y = y_i; y < height; ++y) {
 		for(int x = x_i; x < width; ++x) {
 			buffer->pixels[y][x] = c;	//could modify to use drawPixel but I don't think it makes a difference
@@ -82,7 +91,8 @@ void drawRect(int x_i, int y_i, int width, int height, uWord c){
 static inline void drawPixel(int x, int y, uWord C){
     //struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->fbp;
     //fbp->pixels[y][x] = C;
-    ((struct videoStruct*)VIDEO_BASE)->bfbp->pixels[y][x] = C;
+    //((struct videoStruct*)VIDEO_BASE)->bfbp->pixels[y][x] = C;
+    buffer->pixels[y][x] = C;
 }
 
 void drawChar(int x, int y, char c){
@@ -145,4 +155,26 @@ void drawScreen(unsigned short img[], int height){
 }
 
 
+void wait_for_vsync(){ //I don't fully understand how this works but whatever
+    volatile int* pixel_ctrl_ptr = (int*) 0xff203020;
+    *pixel_ctrl_ptr = 1;
+    while ((*(pixel_ctrl_ptr+3) & 1) != 0);
+}
+
+
+
+
+void swapBuffers(){
+    volatile int* pixel_ctrl_ptr = (int*) 0xff203020;
+    //swap values of display and buffer
+    struct fb_t* temp = display;
+    display = buffer;
+    buffer = temp;
+    *(pixel_ctrl_ptr +1) = (int) &display;
+
+
+    // struct fb_t* temp = ((struct videoStruct*)VIDEO_BASE)->fbp;
+    // ((struct videoStruct*)VIDEO_BASE)->fbp = ((struct videoStruct*)VIDEO_BASE)->bfbp;
+    // ((struct videoStruct*)VIDEO_BASE)->bfbp = temp;
+}
 

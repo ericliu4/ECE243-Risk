@@ -4,10 +4,13 @@
 #include "globals.h"
 #include "helper.h"
 #include "keyboard.h"
+#include "structs.h"
 
 #include "../resources/riskMap.h"
 #include "../resources/titleScreen.h"
 #include "../resources/tutorialScreen.h"
+
+extern struct fb_t* buffer;
 
 void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int locY[], currPlayer currTurn, currPhase currAction){
 
@@ -131,11 +134,11 @@ void updateCursor(){
 }
 
 void drawTitleScreen(){
-    //drawScreen(*titleScreen, 240);
+    drawScreen(*titleScreen, 240);
 
     swapBuffers();
     wait_for_vsync();
-    drawScreen(*titleScreen, 240);
+    //drawScreen(*titleScreen, 240);
 }
 void drawTutorialScreen(){
     drawScreen(*tutorialScreen, 201);
@@ -149,7 +152,8 @@ void drawTutorialScreen(){
 static inline void drawPixel(int x, int y, uWord C){
     //struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->fbp;
     //fbp->pixels[y][x] = C;
-    ((struct videoStruct*)VIDEO_BASE)->bfbp->pixels[y][x] = C;
+    //((struct videoStruct*)VIDEO_BASE)->bfbp->pixels[y][x] = C;
+    buffer->pixels[y][x] = C;
 }
 
 

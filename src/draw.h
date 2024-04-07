@@ -41,4 +41,10 @@ void drawString(int x, int y, char* str);
 
 void clearCharBuffer();
 
+//Function to swap front and back buffers (to be called just before 'wait for vsync')
+void swapBuffers();
+
+//waits for main window to be finished drawing (might even be able to omit this)
+void wait_for_vsync();
+
 #endif /*DRAW_H*/
