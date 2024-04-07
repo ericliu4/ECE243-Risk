@@ -393,7 +393,7 @@ void loadLocations(){
     - Returns false if attack own territoy or attacking territory only has 1 troop
     - Calls diceroll and simulate attack*/
 bool attack(int location1, int location2){
-    if (numTroopsOnTerritory[location1] == 1 || playerNameOnTerritory[location1] == playerNameOnTerritory[location2]){
+    if (numTroopsOnTerritory[location1] == 1 || playerNameOnTerritory[location1] == playerNameOnTerritory[location2] || isTerritoriesConnected[location1][location2] == 0){
         return false;
     } 
     //Simulate attack by using dicerolls
@@ -727,7 +727,39 @@ void machineTurn(){
     bool success = placeTroopsStartOfTurn(currAddTroopIndex, numPlacedTroops);
     printf("Successfully placed troops");
 
-    
+    //attack phase. machine will only attack 0 or 1 territories
+    if ((rand()%100) < 50){
+        printf("AI will not attack this round\n");
+    } else {
+        printf("AI will attack this round\n");
+
+        int attackTerritory = -1;
+        int defendTerritory = -1;
+        for (int i = 0; i < numCountries; i++){
+            if (playerNameOnTerritory[i] == currTurn){
+                //means a valid starting points.
+                for (int j = 0; j < numCountries; j++){
+                    //for each valid second attacking country. there is a 10% chance of switching
+                    //add to randomness factor
+                    if (playerNameOnTerritory[j] != currTurn && isTerritoriesConnected[i][j]){
+                        if (attackTerritory == -1){
+                            attackTerritory = i;
+                            defendTerritory = j;
+                        } else {
+                            if ((rand()%100)< 11){
+                                attackTerritory = i;
+                                defendTerritory = j;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        bool attackedworked = attack(attackTerritory, defendTerritory);
+    }
+    //complete attack phase
+
+    //for move phase, ignore
 }
 
 /*
