@@ -711,6 +711,14 @@ void playerTurn(void){
             printf("Illegal Move!!\n");
             continue;
         }
+                //but a box around selected tutorial
+        int x_i = locationTerritoriesX[getFirstLocation] /4 *4;
+        int y_i = locationTerritoriesY[getFirstLocation] /4 *4;
+        for(int i = 0; i < 2; ++i){
+            drawHollowRect(x_i -2, y_i -2, x_i +6, y_i +6, C_WHITE);
+            swapBuffers();
+            wait_for_vsync();
+        }
         int getSecondLocation = getSelectedTerritory();
         bool success = moveTroopsEndofTurn(getFirstLocation, getSecondLocation);
         if (success == false){
