@@ -48,8 +48,8 @@ void pollKeyboard(){
 				case (char)0x1D: //W key
 				case (char)0x75: //Up arrow (numpad or regular)
 					//no need to check only for negedge
-					if(cursor.yPos < SCREEN_HEIGHT -2)
-						cursor.yPos += 2;
+					if(cursor.yPos > 2)
+						cursor.yPos -= 2;
 					break;
 				case (char)0x1C: //A key
 				case (char)0x6B: //left arrow
@@ -58,8 +58,8 @@ void pollKeyboard(){
 					break;
 				case (char)0x1B: //S key
 				case (char)0x74: //down arrow
-				if(cursor.yPos > 2)
-					cursor.yPos -= 2;
+				if(cursor.yPos < SCREEN_HEIGHT -2)
+					cursor.yPos += 2;
 					break;
 				case (char)0x23: //D key
 				case (char)0x72: //right arrow
