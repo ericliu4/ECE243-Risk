@@ -643,6 +643,7 @@ void printMap(void){
 Initial place troops, attack phase and move at end of turn*/
 void playerTurn(void){
     //phase 1. place troops
+    currAction = PLACETROOPS;
     printf("Phase 1: place troops\n");
     int placeTroopsIndex = getSelectedTerritory();
     int numPlacedTroops = calculateNumTroops(PLAYER1);
@@ -659,6 +660,7 @@ void playerTurn(void){
     //printMap();
 
     //phase 2. attack
+    currAction = ATTACKPHASE;
     printf("Phase 2: attack\n");
     bool valid = true;
     while(valid){
@@ -684,6 +686,7 @@ void playerTurn(void){
     drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
     //printMap();
 
+    currAction = MOVETROOPPHASE;
     printf("Phase 3: Move Troops");
     valid = true;
     while(valid){
@@ -717,6 +720,7 @@ then follow the same 3 steps
 3. move at end of turn
 */
 void machineTurn(){
+    currAction = PLACETROOPS;
     printf("machine turn\n");
     //first check if this currPlayer still in game
     bool inGame = false;
@@ -748,6 +752,7 @@ void machineTurn(){
     drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
     drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
 
+    currAction = ATTACKPHASE;
     //attack phase. machine will only attack 0 or 1 territories
     if ((rand()%100) < 50){
         printf("AI will not attack this round\n");
@@ -783,6 +788,7 @@ void machineTurn(){
     //complete attack phase
 
     //for move phase, ignore
+    currAction = MOVETROOPPHASE;
 }
 
 /*
