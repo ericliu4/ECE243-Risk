@@ -585,15 +585,16 @@ int getSelectedTerritory(){
         updateCursor();
 
         if(cursor.clicked){
+            cursor.clicked = false;
             for(int i = 0; i < 42; ++i){
-                if(cursor.xPos < locationTerritoriesX[i] +2 && cursor.xPos > locationTerritoriesX[i] -2){
-                    if(cursor.yPos < locationTerritoriesY[i] +2 && cursor.yPos > locationTerritoriesY[i] -2){
-                        cursor.clicked = false;
+                if(cursor.xPos < locationTerritoriesX[i] +4 && cursor.xPos > locationTerritoriesX[i] -4){
+                    if(cursor.yPos < locationTerritoriesY[i] +4 && cursor.yPos > locationTerritoriesY[i] -4){
+                        printf("Found a territory");
                         return i;
                     }
                 }
             }
-        cursor.clicked = false;
+        printf("No territory found");
         }
 
     }
@@ -634,7 +635,7 @@ void playerTurn(void){
         checkValidPlaceTroops = placeTroopsStartOfTurn(placeTroopsIndex, numPlacedTroops);
     }
     drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
-    printMap();
+    //printMap();
 
     //phase 2. attack
     printf("Phase 2: attack\n");
@@ -657,7 +658,7 @@ void playerTurn(void){
         }
     }
     drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
-    printMap();
+    //printMap();
 
     printf("Phase 3: Move Troops");
     valid = true;
@@ -680,7 +681,7 @@ void playerTurn(void){
     }
 
     drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
-    printMap();
+    //printMap();
 }
 /*
 First check if this specific bot is still in the game, if not exit
@@ -832,16 +833,16 @@ int main(void){
             bool endGame = checkEndGame();
 
             if (currTurn == PLAYER1){
-                //playerTurn();
+                playerTurn();
                 currTurn = PLAYER2;
             } else if (currTurn == PLAYER2){
-                //machineTurn();
+                machineTurn();
                 currTurn = PLAYER3;
             } else if (currTurn == PLAYER3){
-                //machineTurn();
+                machineTurn();
                 currTurn = PLAYER4;
             } else {
-                //machineTurn();
+                machineTurn();
                 currTurn = PLAYER1;
             }
 
