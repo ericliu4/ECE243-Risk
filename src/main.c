@@ -615,6 +615,9 @@ int getSelectedTerritory(){
     //return -1;
 }
 
+/* Prints the current Map
+For each territories: name of index, who occupies the territory and num troops on territory
+*/
 void printMap(void){
     for (int i = 0; i < numCountries; i++){
         currPlayer PLAYER = playerNameOnTerritory[i];
@@ -630,6 +633,8 @@ void printMap(void){
     }
 }
 
+/* Function that walks through the player's actions
+Initial place troops, attack phase and move at end of turn*/
 void playerTurn(void){
     //phase 1. place troops
     printf("Phase 1: place troops\n");
@@ -690,6 +695,16 @@ void playerTurn(void){
 
     drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
     printMap();
+}
+/*
+First check if this specific bot is still in the game, if not exit
+then follow the same 3 steps
+1. place troops
+2. attack
+3. move at end of turn
+*/
+void machineTurn(){
+    printf("machine turn\n");\
 }
 
 /*
@@ -771,10 +786,17 @@ int main(void){
             bool endGame = checkEndGame();
 
             if (currTurn == PLAYER1){
-                playerTurn();
+                //playerTurn();
                 currTurn = PLAYER2;
+            } else if (currTurn == PLAYER2){
+                //machineTurn();
+                currTurn = PLAYER3;
+            } else if (currTurn == PLAYER3){
+                //machineTurn();
+                currTurn = PLAYER4;
             } else {
-                endGame = true;
+                //machineTurn();
+                currTurn = PLAYER1;
             }
 
             if(endGame){ 
