@@ -50,27 +50,27 @@ void pollKeyboard(){
 					//no need to check only for negedge
 					if(cursor.yPos > 2)
 						cursor.yPos -= 2;
-					break;
+					return;
 				case (char)0x1C: //A key
 				case (char)0x6B: //left arrow
 					if(cursor.xPos > 2)
 						cursor.xPos -= 2;
-					break;
+					return;
 				case (char)0x1B: //S key
 				case (char)0x74: //down arrow
 				if(cursor.yPos < SCREEN_HEIGHT -2)
 					cursor.yPos += 2;
-					break;
+					return;
 				case (char)0x23: //D key
 				case (char)0x72: //right arrow
 					if(cursor.xPos < SCREEN_WIDTH -2)
 						cursor.xPos += 2;
-					break;
+					return;
 				case (char)0x29:
 				case (char)0x5A:
 					cursor.clicked = true;
 					keyPressed = true;
-					break;
+					return;
 			}
 
 	} 

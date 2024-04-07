@@ -713,7 +713,6 @@ int main(void){
 
 
             //start screen polling
-            //titleScreenPolling();
             if(cursor.clicked){ //use this for title screen polling checj
                 printf("Exit StartScreen");
                 nextState = TUTORIAL;
@@ -724,7 +723,8 @@ int main(void){
         }
         else if (currState == TUTORIAL){
             printf("State: Tutorial\n");
-            drawTutorialScreen();
+            if(prevState != TUTORIAL)
+                drawTutorialScreen();
             if(cursor.clicked){ //use this for polling from space bar
                 printf("Exiting Tutorial\n");
                 nextState = INGAME;
