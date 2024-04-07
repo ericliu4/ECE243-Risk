@@ -221,10 +221,12 @@ void loadConnections(){
     isTerritoriesConnected[18][21] = 1;
     isTerritoriesConnected[21][18] = 1;
     isTerritoriesConnected[19][20] = 1;
+    isTerritoriesConnected[19][21] = 1;
     isTerritoriesConnected[20][19] = 1;
     isTerritoriesConnected[20][21] = 1;
     isTerritoriesConnected[21][20] = 1;
     isTerritoriesConnected[21][26] = 1;
+    isTerritoriesConnected[21][19] = 1;
     isTerritoriesConnected[26][21] = 1;
     isTerritoriesConnected[22][23] = 1;
     isTerritoriesConnected[23][22] = 1;
@@ -594,12 +596,22 @@ int getSelectedTerritory(){
         if(cursor.clicked){
             cursor.clicked = false;
             for(int i = 0; i < 42; ++i){
-                if(cursor.xPos < locationTerritoriesX[i] +4 && cursor.xPos > locationTerritoriesX[i] -4){
-                    if(cursor.yPos < locationTerritoriesY[i] +4 && cursor.yPos > locationTerritoriesY[i] -4){
-                        printf("Found a territory");
-                        return i;
+                if(numTroopsOnTerritory[i] < 10){
+                    if(cursor.xPos <= locationTerritoriesX[i] +6 && cursor.xPos >= locationTerritoriesX[i] -2){
+                        if(cursor.yPos <= locationTerritoriesY[i] +6 && cursor.yPos >= locationTerritoriesY[i] -2){
+                            printf("Found a territory");
+                            return i;
+                        }
+                    }
+                } else {
+                    if(cursor.xPos <= locationTerritoriesX[i] +10 && cursor.xPos >= locationTerritoriesX[i] -2){
+                        if(cursor.yPos <= locationTerritoriesY[i] +10 && cursor.yPos >= locationTerritoriesY[i] -2){
+                            printf("Found a territory");
+                            return i;
+                        }
                     }
                 }
+
             }
         printf("No territory found");
         }

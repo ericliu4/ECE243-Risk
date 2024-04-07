@@ -77,7 +77,7 @@ void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int
         int x_i = locX[i] /4 *4;
         int y_i = locY[i] /4 *4;
         //drawRect(x_i -2, y_i -2, x_i +6, y_i +6, col);
-        drawRectInBackdrop(*riskMap, x_i -2, y_i -2, x_i +6, y_i +6, col);
+
 
         //draw number of troops at location
         if(numTroopsOnLoc[i] < 0)
@@ -85,12 +85,15 @@ void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int
         if(numTroopsOnLoc[i] >9){
             unsigned char left = numTroopsOnLoc[i] %10 +48;
             unsigned char right = numTroopsOnLoc[i] /10 +48;
-            drawChar(locX[i], locY[i], left);
-            drawChar(locX[i] +4, locY[i], right);
+            drawChar(locX[i], locY[i], right);
+            drawChar(locX[i] +4, locY[i], left);
+            drawRectInBackdrop(*riskMap, x_i -2, y_i -2, x_i +10, y_i +10, col);
         }     
-        else
+        else{
             drawChar(locX[i], locY[i], numTroopsOnLoc[i]+48);
             drawChar(locX[i] +4, locY[i], 0);
+            drawRectInBackdrop(*riskMap, x_i -2, y_i -2, x_i +6, y_i +6, col);
+        }
     }
         //draw main map
     drawScreen(*riskMap, 222);
