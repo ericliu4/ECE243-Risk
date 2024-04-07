@@ -45,13 +45,17 @@ void drawMap(currPlayer playerNameOnLoc[], int numTroopsOnLoc[], int locX[], int
     drawString(16, 235, "Current Action: ");
     switch(currAction){
         case PLACETROOPS:
-            drawString(80, 235, "Place Troops");
+            drawString(80, 235, "Place Troops              ");
+            break;
         case ATTACKPHASE:
-            drawString(80, 235, "Attack!");
+            drawString(80, 235, "Attack!                   ");
+            break;
         case MOVETROOPPHASE:
-            drawString(80, 235, "Move Troops");
+            drawString(80, 235, "Move Troops               ");
+            break;
         default:
             drawString(80, 235, "ERROR (Invalid turn phase)");
+            break;
     }
     unsigned short col;
     for(int i = 0; i < 42; ++i){
