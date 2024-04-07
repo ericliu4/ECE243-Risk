@@ -8,7 +8,7 @@
 //#define uWord unsigned short
 
 struct fb_t {
-    unsigned short pixels[256][512]; //don't ask me why its like this, it just is...
+    unsigned short volatile pixels[256][512]; //don't ask me why its like this, it just is...
 };
 
 struct videoStruct {

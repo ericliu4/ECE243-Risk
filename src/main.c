@@ -742,6 +742,7 @@ int main(void){
 
 
                 drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+                drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction); //call twice so it draws on both buffers
                 mapChanged = false;
             }
             updateCursor();

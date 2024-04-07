@@ -161,7 +161,9 @@ void wait_for_vsync(){ //I don't fully understand how this works but whatever
     while ((*(pixel_ctrl_ptr+3) & 1) != 0);
 }
 
+void setUpDoubleBuffering(){
 
+}
 
 
 void swapBuffers(){
@@ -170,7 +172,7 @@ void swapBuffers(){
     struct fb_t* temp = display;
     display = buffer;
     buffer = temp;
-    *(pixel_ctrl_ptr +1) = (int) &display;
+    *(pixel_ctrl_ptr +1) = (int)(display->pixels);
 
 
     // struct fb_t* temp = ((struct videoStruct*)VIDEO_BASE)->fbp;
