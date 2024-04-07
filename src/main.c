@@ -648,14 +648,14 @@ void playerTurn(void){
             valid = false;
             break;
         } else if (playerNameOnTerritory[getFirstLocation] != PLAYER1){
-            printf("Illegal Move!!\n");
+            printf("Illegal Move TERRITORY 1!!\n");
             continue;
         }
         int getSecondLocation = getSelectedTerritory();
         printf("GOT TO ATTACK, TYPE 99 to end attack phase\n");
         bool success = attack(getFirstLocation, getSecondLocation);
         if (success == false){
-            printf("Illegal Move!!\n");
+            printf("Illegal Move TERRITORY 22222!!\n");
             continue;
         }
     }
