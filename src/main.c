@@ -586,6 +586,11 @@ int getSelectedTerritory(){
 
         updateCursor();
 
+        if(cursor.q){
+            cursor.q = false;
+            return -1;
+        }
+
         if(cursor.clicked){
             cursor.clicked = false;
             for(int i = 0; i < 42; ++i){
