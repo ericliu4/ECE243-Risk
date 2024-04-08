@@ -9,6 +9,7 @@
 #include "enums.h"
 #include "keyboard.h"
 #include "draw.h"
+#include "../resources/audio.h"
 
 gameStates prevState;
 gameStates nextState;
@@ -684,14 +685,26 @@ void playerTurn(void){
         }
 
         int getSecondLocation = getSelectedTerritory();
+
+        currPlayer defender = playerNameOnTerritory[getSecondLocation];
+
         printf("GOT TO ATTACK, TYPE 99 to end attack phase\n");
         bool success = attack(getFirstLocation, getSecondLocation);
         if (success == false){
             printf("Illegal Move TERRITORY 22222!!\n");
             continue;
         } else {
+
             drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
             drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+
+            //only play sound for the player turn not the computer
+            if(defender == playerNameOnTerritory[getSecondLocation]){
+                playWompWomp();
+            } else {
+                playVictory();
+            }
+
         }
     }
 
