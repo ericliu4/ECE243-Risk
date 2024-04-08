@@ -11,6 +11,8 @@
 #include "draw.h"
 #include "audio.h"
 
+#include <unistd.h>
+
 gameStates prevState;
 gameStates nextState;
 gameStates currState;
@@ -120,7 +122,7 @@ bool diceRolls(int attackTerritory, int defendTerritory){
             int halfTroops = numTroopsOnTerritory[attackTerritory]/2;
             numTroopsOnTerritory[attackTerritory] -= halfTroops;
             numTroopsOnTerritory[defendTerritory] += halfTroops;
-            
+
             playerNameOnTerritory[defendTerritory] = playerNameOnTerritory[attackTerritory];
             return true;
         }
@@ -939,12 +941,15 @@ int main(void){
             } else if (currTurn == PLAYER2){
                 machineTurn();
                 currTurn = PLAYER3;
+                sleep(2);
             } else if (currTurn == PLAYER3){
                 machineTurn();
                 currTurn = PLAYER4;
+                sleep(2);
             } else {
                 machineTurn();
                 currTurn = PLAYER1;
+                sleep(2);
             }
 
             if(endGame){ 
