@@ -32,19 +32,6 @@ void fillScreen(uWord c){
 }
 
 
-void drawHLine(uWord c, int y){
-    //struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
-    for (int x = 0; x < SCREEN_WIDTH; x++){
-        buffer->pixels[y][x] = c;
-    }
-}
-void drawVLine(uWord c, int x){
-    //struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
-    for (int y = 0; y < SCREEN_HEIGHT; y++){
-        buffer->pixels[y][x] = c;
-    }
-}
-
 void drawLine(int x0, int y0, int x1, int y1, int color){
     bool isSteep = abs(y1-y0) > abs(x1-x0);
     if (isSteep){
@@ -161,18 +148,6 @@ void clearCharBuffer(){
     }
 }
 
-
-
-
-void drawSprite(int x_i, int y_i, int* sprite){
-    //Assuming sprite is 8x8
-    for(size_t y = 0; y < 8; ++y){
-        for(size_t x = 0; x < 8; ++x){
-            drawPixel(x, y, *sprite);
-            ++sprite;
-        }
-    }
-}
 
 void drawScreen(unsigned short img[], int height){
     for(size_t y = 0; y < height; ++y){
