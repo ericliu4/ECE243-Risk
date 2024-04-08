@@ -515,7 +515,7 @@ int calculateNumTroops(currPlayer turnPlayer){
     Simulate move
 */
 bool moveTroopsEndofTurn(int location1, int location2){
-    if (currTurn != playerNameOnTerritory[location1] || currTurn != playerNameOnTerritory[location1]){
+    if (currTurn != playerNameOnTerritory[location1] || currTurn != playerNameOnTerritory[location2]){
         return false;
     }
     int toMove = numTroopsOnTerritory[location1]-1;
@@ -798,7 +798,68 @@ void machineTurn(){
     drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
     drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
 
-    //attack phase. machine will only attack 0 or 1 territories
+    //attack phase.
+    //50 percent chance of attacking one territory. 
+    //If successful. 50% chance of continuing and attacking another one.
+
+    bool keepAttacking = (rand()%100) < 51;
+    while (keepAttacking){
+        printf("AI currently attacking\n");
+        int attackTerritory = -1;
+        int defendTerritory = -1;
+        for (int i = 0; i < numCountries; i++){
+            //add a checker
+            if (playerNameOnTerritory[i] == currTurn && numTroopsOnTerritory[i] > 1){
+                //means a valid starting points.
+                for (int j = 0; j < numCountries; j++){
+                    //for each valid second attacking country. there is a 10% chance of switching
+                    //add to randomness factor
+                    if (playerNameOnTerritory[j] != currTurn && isTerritoriesConnected[i][j]){
+                        if (attackTerritory == -1){
+                            attackTerritory = i;
+                            defendTerritory = j;
+                        } else {
+                            if ((rand()%100)< 11){
+                                attackTerritory = i;
+                                defendTerritory = j;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (attackTerritory == -1){
+            printf("No Possible Attacking Options\n");
+            break;
+        }
+
+
+                //but a box around selected tutorial
+        int x_i = locationTerritoriesX[attackTerritory] /4 *4;
+        int y_i = locationTerritoriesY[attackTerritory] /4 *4;
+        for(int i = 0; i < 2; ++i){
+            drawHollowRect(x_i -2, y_i -2, x_i +6, y_i +6, C_WHITE);
+            swapBuffers();
+            wait_for_vsync();
+        }
+
+                        //but a box around selected tutorial
+        x_i = locationTerritoriesX[defendTerritory] /4 *4;
+        y_i = locationTerritoriesY[defendTerritory] /4 *4;
+        for(int i = 0; i < 2; ++i){
+            drawHollowRect(x_i -2, y_i -2, x_i +6, y_i +6, C_BLACK);
+            swapBuffers();
+            wait_for_vsync();
+        }
+
+        bool attackedworked = attack(attackTerritory, defendTerritory);
+
+
+        keepAttacking = (rand()%100) < 51;
+    }
+
+    /*
     if ((rand()%100) < 50){
         printf("AI will not attack this round\n");
     } else {
@@ -845,6 +906,7 @@ void machineTurn(){
         }
         bool attackedworked = attack(attackTerritory, defendTerritory);
     }
+    */
 
     currAction = MOVETROOPPHASE;
     drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
@@ -941,7 +1003,7 @@ int main(void){
             } else if (currTurn == PLAYER2){
                 machineTurn();
                 currTurn = PLAYER3;
-                sleep(2);
+                sleep(2); //should be 2 seconds
             } else if (currTurn == PLAYER3){
                 machineTurn();
                 currTurn = PLAYER4;
