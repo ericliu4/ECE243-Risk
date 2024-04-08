@@ -31,37 +31,10 @@ void fillScreen(uWord c){
             buffer->pixels[y][x] = c;
 }
 
-
-void drawLine(int x0, int y0, int x1, int y1, int color){
-    bool isSteep = abs(y1-y0) > abs(x1-x0);
-    if (isSteep){
-        swap(&x0, &y0);
-        swap(&x1, &y1);
-    }
-    if (x0 > x1){
-        swap(&x0, &x1);
-        swap(&y0, &y1);
-    }
-    int deltaX = x1 - x0;
-    int deltaY = abs(y1 - y0);
-    int error = -(deltaX / 2);
-    int y = y0;
-    int y_step;
-    if (y0 < y1) {
-        y_step = 1 ;
-    } else {y_step = -1;}
-
-    for (int x = x0; x < x1; x++){
-        if (isSteep){
-            drawPixel(y, x, color);
-        } else {
-            drawPixel(x, y, color);
-        }
-        error = error + deltaY;
-        if (error > 0){
-            y = y + y_step;
-            error -= deltaX;
-        }
+void drawHLine(uWord c, int y){
+    //struct fb_t* buffer = ((struct videoStruct*)VIDEO_BASE)->bfbp;
+    for (int x = 0; x < SCREEN_WIDTH; x++){
+        buffer->pixels[y][x] = c;
     }
 }
 

@@ -19,9 +19,8 @@ void fillScreen(uWord c);
 //draws a single pixel (not really used anywhere but incase you need it)
 static inline void drawPixel(int x, int y, uWord C);
 
-
-//draws a line between any two points
-void drawLine(int x0, int y0, int x1, int y1, int color);
+//draw horizontal line
+void drawHLine(uWord c, int y);
 
 //draws a filled rectangle
 void drawRect(int x_i, int y_i, int width, int height, uWord c);
