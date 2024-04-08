@@ -1,4 +1,5 @@
-#include "../resources/audio.h"
+#include "../resources/audioFiles.h"
+#include "audio.h"
 #include "structs.h"
 
 //set up audio

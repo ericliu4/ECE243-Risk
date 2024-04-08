@@ -9,7 +9,7 @@
 #include "enums.h"
 #include "keyboard.h"
 #include "draw.h"
-#include "../resources/audio.h"
+#include "audio.h"
 
 gameStates prevState;
 gameStates nextState;
