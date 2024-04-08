@@ -6,9 +6,12 @@
 #include "keyboard.h"
 #include "structs.h"
 
+
 #include "../resources/riskMap.h"
 #include "../resources/titleScreen.h"
 #include "../resources/tutorialScreen.h"
+#include "../resources/win.h"
+#include "../resources/lose.h"
 
 extern struct fb_t* buffer;
 
@@ -134,6 +137,22 @@ void drawTitleScreen(){
 }
 void drawTutorialScreen(){
     drawScreen(*tutorialScreen, 201);
+
+    swapBuffers();
+    wait_for_vsync();
+    //drawScreen(*tutorialScreen, 201);
+}
+
+void drawWinScreen(){
+    drawScreen(*win, 320);
+
+    swapBuffers();
+    wait_for_vsync();
+    //drawScreen(*tutorialScreen, 201);
+}
+
+void drawLoseScreen(){
+    drawScreen(*lose, 320);
 
     swapBuffers();
     wait_for_vsync();

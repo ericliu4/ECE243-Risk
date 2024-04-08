@@ -16,6 +16,9 @@ void drawTitleScreen();
 
 void drawTutorialScreen();
 
+void drawWinScreen();
+void drawLoseScreen();
+
 void drawCursor(int x_cursor, int y_cursor, int colour, int size);
 
 void eraseCursor(int x_cursor, int y_cursor, int size, gameStates gameState);

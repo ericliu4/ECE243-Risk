@@ -951,10 +951,19 @@ int main(void){
             printf("State: EndGame\n");
             //drawEndGame(); <- make sure to pass through if the player won or lost
             bool playerWon = checkIfPlayerWIn();
+            clearCharBuffer();
+            if(playerWon){
+                drawWinScreen();
+                playVictory();
+            } else {
+                drawLoseScreen();
+                playWompWomp();
+            }
             //drawEndGame(playerWon); <- make sure to pass through if the player won or lost
             if(cursor.clicked){ 
                 printf("Exit EndGame Stage");
                 nextState = STARTSCREEN;
+                cursor.clicked = false;
             }     
         }
 

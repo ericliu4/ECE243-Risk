@@ -18,16 +18,16 @@ def export_to_c_array(image, output_file):
     
     with open(output_file, 'w') as f:
         f.write("#include <stdint.h>\n\n")
-        f.write("const uint32_t image_width = {};\n".format(width))
-        f.write("const uint32_t image_height = {};\n".format(height))
-        f.write("const uint16_t image_data[{0}][{1}] =".format(height, width))
+        #f.write("const uint32_t image_width = {};\n".format(width))
+        #f.write("const uint32_t image_height = {};\n".format(height))
+        f.write("const uint16_t {2}[{0}][{1}] =".format(height, width, output_file))
         
         f.write("   {\n")
         for y in range(height):
             f.write("    {")
             for x in range(width):
                 pixel = pixels[y * width + x]
-                r, g, b, a = pixel
+                r, g, b = pixel
                 # Scale 8-bit channels to 5-bit (RGB) and 1-bit (A) for 16-bit color representation
                 color = ((r >> 3) << 11) | ((g >> 2) << 5) | (b >> 3)
                 f.write("0x{:04X}".format(color))
