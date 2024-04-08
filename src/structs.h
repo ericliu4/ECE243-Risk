@@ -27,4 +27,16 @@ typedef struct {
 }cursor_t;
 
 
+struct audio_t {
+    volatile unsigned int control;
+    volatile unsigned char rarc;
+    volatile unsigned char ralc;
+    volatile unsigned char wsrc;
+    volatile unsigned char wslc;
+    volatile unsigned int ldata;
+    volatile unsigned int rdata;
+};
+
+
+
 #endif /*STRUCTS_H*/
