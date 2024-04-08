@@ -106,12 +106,21 @@ bool diceRolls(int attackTerritory, int defendTerritory){
                 numTroopsOnTerritory[attackTerritory]--;
             }
         }
+
+        //attack is successful
+        //taken over territory
         if (numTroopsOnTerritory[defendTerritory] <= 0){
             int numTroopsLeft = attackNumDice - attackLost;
 
             //populate defendTerritory with remain attackTroops
             numTroopsOnTerritory[attackTerritory]-= numTroopsLeft;
             numTroopsOnTerritory[defendTerritory] = numTroopsLeft;
+
+            //move half of attacking territory troops onto taken territory. (speeds up the game)
+            int halfTroops = numTroopsOnTerritory[attackTerritory]/2;
+            numTroopsOnTerritory[attackTerritory] -= halfTroops;
+            numTroopsOnTerritory[defendTerritory] += halfTroops;
+            
             playerNameOnTerritory[defendTerritory] = playerNameOnTerritory[attackTerritory];
             return true;
         }
