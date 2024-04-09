@@ -37,6 +37,15 @@ struct audio_t {
     volatile unsigned int rdata;
 };
 
+struct timer_t{
+    volatile unsigned int status;
+    volatile unsigned int control;
+    volatile unsigned int periodLo;
+    volatile unsigned int periodHi;
+    volatile unsigned int snapLo;
+    volatile unsigned int snapHi;
+};
+
 
 
 #endif /*STRUCTS_H*/

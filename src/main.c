@@ -10,8 +10,9 @@
 #include "keyboard.h"
 #include "draw.h"
 #include "audio.h"
+#include "timer.h"
 
-#include <unistd.h>
+//#include <unistd.h>
 
 gameStates prevState;
 gameStates nextState;
@@ -682,7 +683,7 @@ void playerTurn(void){
         if (getFirstLocation == -1){
             valid = false;
             break;
-        } else if (playerNameOnTerritory[getFirstLocation] != PLAYER1){
+        } else if (playerNameOnTerritory[getFirstLocation] != PLAYER1 || numTroopsOnTerritory[getFirstLocation] == 1){
             printf("Illegal Move TERRITORY 1!!\n");
             continue;
         }
@@ -795,8 +796,6 @@ void machineTurn(){
     printf("Successfully placed troops");
 
     currAction = ATTACKPHASE;
-    drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
-    drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
 
     //attack phase.
     //50 percent chance of attacking one territory. 
@@ -804,6 +803,11 @@ void machineTurn(){
 
     bool keepAttacking = (rand()%100) < 51;
     while (keepAttacking){
+        drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction); //calling drawmap twice so it gets put on both buffers
+        drawMap(playerNameOnTerritory, numTroopsOnTerritory, locationTerritoriesX, locationTerritoriesY, currTurn, currAction);
+        //printf("BEFORE FIRST WAIT A SEC");
+        //waitASec();
+        //printf(" - AFTER FIRST WAIT A SEC");
         printf("AI currently attacking\n");
         int attackTerritory = -1;
         int defendTerritory = -1;
@@ -843,7 +847,9 @@ void machineTurn(){
             swapBuffers();
             wait_for_vsync();
         }
-
+        //waitASec();
+        waitHalfASec();
+        currPlayer defender = playerNameOnTerritory[defendTerritory];
                         //but a box around selected tutorial
         x_i = locationTerritoriesX[defendTerritory] /4 *4;
         y_i = locationTerritoriesY[defendTerritory] /4 *4;
@@ -852,8 +858,15 @@ void machineTurn(){
             swapBuffers();
             wait_for_vsync();
         }
-
+        //waitASec();
+        waitHalfASec();
         bool attackedworked = attack(attackTerritory, defendTerritory);
+        /*
+        if(defender == playerNameOnTerritory[getSecondLocation]){
+            playWompWomp();
+        } else {
+            playVictory();
+        }*/
 
 
         keepAttacking = (rand()%100) < 51;
@@ -1003,15 +1016,23 @@ int main(void){
             } else if (currTurn == PLAYER2){
                 machineTurn();
                 currTurn = PLAYER3;
-                sleep(2); //should be 2 seconds
+                //sleep(2); //should be 2 seconds
+                //printf("BEFORE WAIT A SEC");
+                //waitASec();
+                waitHalfASec();
+                //printf("GOT TO HERE \n");
             } else if (currTurn == PLAYER3){
                 machineTurn();
                 currTurn = PLAYER4;
-                sleep(2);
+                //sleep(2);
+                //waitASec();
+                waitHalfASec();
             } else {
                 machineTurn();
                 currTurn = PLAYER1;
-                sleep(2);
+                //sleep(2);
+                //waitASec();
+                waitHalfASec();
             }
 
             if(endGame){ 
